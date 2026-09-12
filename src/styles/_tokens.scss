@@ -1,0 +1,111 @@
+
+
+// Colors
+$ink: #14201a; // dark sections: header, hero, CTA banner, late-hours, footer
+$ink-soft: #1b2a1e;
+$cream: #f6f0e4; // light sections
+$card: #ffffff;
+$card-border: #e7dfcf;
+$red: #c1382b;
+$red-dark: #a32e23;
+$text-dark: #221d18;
+$text-on-ink: #f3eee2;
+$muted: #8b8276;
+$muted-on-ink: #b7b0a0;
+$gold-line: #d9cbae;
+$placeholder-fill: #ded2be;
+
+// Typography
+$font-display: 'Playfair Display', Georgia, serif;
+$font-body: 'Inter', Arial, sans-serif;
+
+// Spacing scale (8px base)
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 16px;
+$space-4: 24px;
+$space-5: 32px;
+$space-6: 48px;
+$space-7: 64px;
+$space-8: 80px;
+$space-9: 96px;
+$space-10: 128px;
+
+// Layout
+$max-width: 1288px;
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-pill: 999px;
+
+// Breakpoints
+$bp-tablet: 900px;
+$bp-mobile: 600px;
+
+@mixin container {
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $space-6;
+
+  @media (max-width: $bp-mobile) {
+    padding-inline: $space-3;
+  }
+}
+
+@mixin section($bg) {
+  background: $bg;
+  padding-block: $space-9;
+
+  @media (max-width: $bp-mobile) {
+    padding-block: $space-6;
+  }
+}
+
+@mixin eyebrow($color: $red) {
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  border-radius: $radius-pill;
+  font-family: $font-body;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $red;
+  color: #fff;
+}
+
+@mixin button-outline($on-dark: false) {
+  @include button-base;
+  background: transparent;
+
+  @if $on-dark {
+    border: 1.5px solid rgba(#fff, 0.5);
+    color: $text-on-ink;
+  } @else {
+    border: 1.5px solid $text-dark;
+    color: $text-dark;
+  }
+}
