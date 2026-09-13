@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Link, useLocation} from 'react-router-dom';
-import styles from '../styles/_header.scss';
+import styles from '../styles/Header.module.scss';
 import { CartIcon, MenuIcon, CloseIcon } from './Icons';
 
 
@@ -13,8 +13,8 @@ const NAV = [
 
 export default function Header() {
     const [open, setOpen] = useState(false)
-    const location = useLocation
-    const isHome = location === '/'
+    const location = useLocation()
+    const isHome = location.pathname === '/'
 
     return (
         <header className={styles.header}>

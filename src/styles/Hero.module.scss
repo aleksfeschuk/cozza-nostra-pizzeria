@@ -1,0 +1,93 @@
+@use '../styles/tokens' as *;
+
+.hero {
+    background: linear-gradient(90deg, #08090a 0%, #111416 55%, #241307 100%);
+    border-bottom: 1px solid rgba(#fff, 0.06);
+    padding-block: $space-8;
+
+    @media(max-width: $bp-mobile) {
+        padding-block: $space-6;
+    }
+}
+
+.inner {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: $space-8;
+
+    @media(max-width: $bp-tablet) {
+        grid-template-columns: 1fr;
+        gap: $space-6;
+    }
+}
+
+.eyebrow {
+    @include eyebrow;
+}
+
+.title {
+    margin-top: $space-4;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: $text-on-ink;
+
+    @media (max-width: $bp-mobile) {
+        font-size: 30px;
+    }
+}
+
+.body {
+    margin-top: $space-4;
+    max-width: 440px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: $muted-on-ink;
+}
+
+.meta {
+    margin-top: $space-5;
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-on-ink;
+
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+}
+
+.actions {
+    margin-top: $space-6;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+}
+
+.btnPrimaty {
+    @include button-primary
+}
+
+.btnOutline {
+    @include button-outline(true)
+}
+
+.photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: $radius-md;
+    overflow: hidden;
+    background: $placeholder-fill;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
