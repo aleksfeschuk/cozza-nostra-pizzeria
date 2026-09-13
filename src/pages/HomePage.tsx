@@ -1,6 +1,8 @@
-import  Header  from '../components/Header'
-import Hero from '../components/Hero'
-
+import  Header  from '../components/Header';
+import Hero from '../components/Hero';
+import MenuCarousel from '../components/MenuCarousel';
+import About from '../components/About';
+import Features from '../components/Features';
 
 export default function HomePage () {
     return (
@@ -8,6 +10,10 @@ export default function HomePage () {
             <Header />
             <main>
                 <Hero />
+                <MenuCarousel />
+                <About />
+                <Features />
+
             </main>
         </>
     )

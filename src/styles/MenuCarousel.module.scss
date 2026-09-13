@@ -1,0 +1,153 @@
+@use '../styles/tokens' as *;
+
+.section {
+    @include section($cream);
+}
+
+.header {
+    @include container;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $space-5;
+    margin-bottom: $space-6;
+
+    @media (max-width: $bp-mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.eyebrow {
+    @include eyebrow;
+}
+
+.title {
+    margin-top: $space-3;
+    font-size: 30px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.body {
+    margin-top: $space-3;
+    max-width: 420px;
+    font-size: 13.5px;
+    color: $muted;
+    line-height: 1.6;
+}
+
+.controls {
+    display: flex;
+    gap: $space-2;
+    flex-shrink: 0;
+}
+
+
+.arrowBtn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid $card-border;
+    background: $card;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-dark;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+
+    &:not(:disabled):hover {
+        border-color: $red;
+        color: $red;
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed; 
+    }
+}
+
+
+.photo {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    border-radius: $radius-sm;
+    background: $placeholder-fill;
+    object-fit: cover;
+}
+
+.name {
+    margin-top: $space-3;
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.desc {
+    margin-top: 4px;
+    font-size: 11.5px;
+    color: $muted;
+    line-height: 1.5;
+    min-height: 34px;
+}
+
+.footer {
+    margin-top: $space-3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price {
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.addBtn {
+    border: none;
+    background: $red;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: $radius-pill;
+    cursor: pointer;
+
+    &:hover {
+        background: $red-dark;
+    }
+}
+
+.fullMenuWrap {
+    @include container;
+    margin-top: $space-6;
+    text-align: center;
+}
+
+.fullMenuBtn {
+    @include button-outline;
+}
+
+.dots {
+    @include container;
+    display: flex;
+    gap: 6px;
+    margin-top: $space-3;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $card-border;
+    transition: background 0.15s ease, width 0.15s ease;
+}
+
+.dotActive {
+    @extend .dot;
+    background: $red;
+    width: 18px;
+    border-radius: 3px;
+}

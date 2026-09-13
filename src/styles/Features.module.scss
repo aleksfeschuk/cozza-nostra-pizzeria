@@ -1,0 +1,40 @@
+@use '../styles/tokens' as *;
+
+
+.section {
+    background: $cream;
+    border-top: 1px solid $gold-line;
+    padding-block: $space-6;
+}
+
+.inner {
+    @include container;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-5;
+    text-align: center;
+
+    @media (max-width: $bp-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    color: $red;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+
+.sub {
+    font-size: 11.5px;
+    color: $muted;
+}
