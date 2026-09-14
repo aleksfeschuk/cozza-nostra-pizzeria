@@ -4,6 +4,7 @@ import MenuCarousel from '../components/MenuCarousel';
 import About from '../components/About';
 import Features from '../components/Features';
 import CtaBanner from '../components/CtaBanner';
+import Reviews from '../components/Reviews';
 
 export default function HomePage () {
     return (
@@ -15,6 +16,7 @@ export default function HomePage () {
                 <About />
                 <Features />
                 <CtaBanner />
+                <Reviews />
             </main>
         </>
     )

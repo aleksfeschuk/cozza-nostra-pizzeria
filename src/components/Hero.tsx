@@ -46,7 +46,7 @@ export default function Hero() {
                 </div>
 
                 <div className={styles.photo}>
-                    <img src="/images/hero.svg" alt="Pizza Cosa Nostra" />
+                    <img src="src/images/pizzeria/hero-section.jpeg" alt="Pizza Cosa Nostra" />
                 </div>
             </div>
         </section>

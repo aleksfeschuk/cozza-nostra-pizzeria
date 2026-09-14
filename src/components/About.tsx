@@ -5,7 +5,7 @@ export default function About() {
     return (
         <section className={styles.section}>
             <div className={styles.inner}>
-                <img className={styles.photo} src="/images/about-dough.svg" alt="Przygotowanie ciasta na pizzę" />
+                <img className={styles.photo} src="src/images/pizzeria/how-this-work.jpeg" alt="Przygotowanie ciasta na pizzę" />
                 
                 <div>
                     <p className={styles.eyebrow}>O NAS</p>

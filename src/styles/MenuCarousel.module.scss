@@ -69,6 +69,33 @@
 }
 
 
+.track {
+  @include container;
+  display: flex;
+  gap: $space-4;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: $space-4;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $bp-mobile) {
+    width: 210px;
+  }
+}
+
+
 .photo {
     aspect-ratio: 4 / 3;
     width: 100%;
