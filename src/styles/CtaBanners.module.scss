@@ -1,1 +1,33 @@
 @use '../styles/tokens' as *;
+
+.section {
+    background: $ink-soft;
+    padding-block: $space-8;
+}
+
+.inner {
+    @include container;
+}
+
+.eyebrow {
+    @include eyebrow(#e8785f);
+}
+
+.title {
+    margin-top: $space-3;
+    font-size: 30px;
+    font-weight: 700;
+    color: $text-on-ink;
+}
+
+.body {
+    margin-top: $space-2;
+    font-size: 13.5px;
+    color: $muted-on-ink;
+    max-width: 480px;
+}
+
+.btn {
+    @include button-primary;
+    margin-top: $space-5;
+}

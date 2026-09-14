@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import MenuCarousel from '../components/MenuCarousel';
 import About from '../components/About';
 import Features from '../components/Features';
+import CtaBanner from '../components/CtaBanner';
 
 export default function HomePage () {
     return (
@@ -13,7 +14,7 @@ export default function HomePage () {
                 <MenuCarousel />
                 <About />
                 <Features />
-                {/* <CtaBanner /> */}
+                <CtaBanner />
             </main>
         </>
     )
