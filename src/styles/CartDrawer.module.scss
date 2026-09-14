@@ -1,0 +1,203 @@
+@use '../styles/tokens' as *;
+
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(#08090a, 0.5);
+    z-index: 90;
+    animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 420px;
+    max-width: 92vw;
+    background: $cream;
+    z-index: 91;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -12px 0 40px rgba(#000, 0.25);
+    animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-4 $space-4;
+    border-bottom: 1px solid $card-border;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: $font-display;
+    color: $text-dark;
+}
+
+.closeBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid $card-border;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-dark;
+    cursor: pointer;
+
+    &:hover {
+        border-color: $red;
+        color: $red;
+    }
+}
+
+.body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-4;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: $muted;
+    gap: $space-3;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3 0;
+    border-bottom: 1px solid $card-border;
+
+    &:first-child {
+        padding-top: 0;
+    }
+}
+
+.rowPhoto {
+    width: 56px;
+    height: 56px;
+    border-radius: $radius-sm;
+    object-fit: cover;
+    background: $placeholder-fill;
+    flex-shrink: 0;
+}
+
+.rowInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.rowName {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.rowPrice {
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: $muted;
+}
+
+.qty {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+}
+
+.qtyBtn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid $card-border;
+    background: $card;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+    cursor: pointer;
+
+    &:hover {
+        border-color: $red;
+        color: $red;
+    }
+}
+
+.qtyValue {
+    min-width: 18px;
+    text-align: center;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    color: $muted;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+
+    &:hover {
+        color: $red;
+    }
+}
+
+.footer {
+    border-top: 1px solid $card-border;
+    padding: $space-4;
+}
+
+.totalRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-dark;
+    margin-bottom: $space-3;
+}
+
+.checkoutBtn {
+    @include button-primary;
+    width: 100%;
+    justify-content: center;
+}
+
+.checkoutBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
