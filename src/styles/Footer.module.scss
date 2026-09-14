@@ -1,0 +1,54 @@
+@use '../styles/tokens' as *;
+
+.footer {
+    background: $ink;
+    border-top: 1px solid rgba(#fff, 0.08);
+}
+
+.footerTop {
+    @include container;
+    padding-block: $space-6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-5;
+    flex-wrap: wrap;
+}
+
+.footerLogo {
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: 700;
+    color: $text-on-ink;
+}
+
+.footerNav {
+    display: flex;
+    gap: $space-5;
+    flex-wrap: wrap;
+}
+
+.footerLink {
+    font-size: 13px;
+    color: $muted-on-ink;
+
+    &:hover {
+        color: $text-on-ink;
+    }
+}
+
+.footerLocation {
+    font-size: 12px;
+    color: $muted-on-ink;
+}
+
+.footerBottom {
+    border-top: 1px solid rgba(#fff, 0.08);
+    padding: $space-4 0;
+}
+
+.footerBottomInner {
+    @include container;
+    font-size: 11px;
+    color: $muted-on-ink;
+}

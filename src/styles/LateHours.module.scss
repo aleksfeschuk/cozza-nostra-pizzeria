@@ -1,0 +1,54 @@
+@use '../styles/tokens' as *;
+
+.lateSection {
+    background: $ink;
+    padding-block: $space-7;
+}
+
+.lateInner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-5;
+    flex-wrap: wrap;
+}
+
+.lateLeft {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+}
+
+.moonIcon {
+    color: #e8b93f;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.lateTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-on-ink;
+}
+
+.lateBody {
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: $muted-on-ink;
+    max-width: 420px;
+}
+
+.lateBtn {
+    @include button-primary;
+    margin-top: $space-3;
+}
+
+.openLate {
+    font-family: $font-display;
+    font-style: italic;
+    font-size: 26px;
+    color: #e8785f;
+    line-height: 1.1;
+    text-align: right;
+}
