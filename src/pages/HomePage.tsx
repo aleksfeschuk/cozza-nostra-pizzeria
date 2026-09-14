@@ -5,6 +5,7 @@ import About from '../components/About';
 import Features from '../components/Features';
 import CtaBanner from '../components/CtaBanner';
 import Reviews from '../components/Reviews';
+import HoWItWorks from '../components/HowItWorks';
 
 export default function HomePage () {
     return (
@@ -17,6 +18,7 @@ export default function HomePage () {
                 <Features />
                 <CtaBanner />
                 <Reviews />
+                <HoWItWorks />
             </main>
         </>
     )
