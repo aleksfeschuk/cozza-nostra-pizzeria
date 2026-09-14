@@ -1,6 +1,6 @@
 import styles from '../styles/Hero.module.scss'
 import { PinIcon, ClockIcon, ArrowIcon } from './Icons'
-import { track } from '../components/lib/'
+import { track } from './lib/analytics'
 
 
 export default function Hero() {

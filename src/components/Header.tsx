@@ -2,6 +2,7 @@ import { useState } from "react";
 import {Link, useLocation} from 'react-router-dom';
 import styles from '../styles/Header.module.scss';
 import { CartIcon, MenuIcon, CloseIcon } from './Icons';
+import { track } from "./lib/analytics";
 
 
 const NAV = [
@@ -15,6 +16,10 @@ export default function Header() {
     const [open, setOpen] = useState(false)
     const location = useLocation()
     const isHome = location.pathname === '/'
+
+    function handleCta() {
+        track({ type: 'cta_click', label: 'header_book'})
+    }
 
     return (
         <header className={styles.header}>
@@ -64,7 +69,7 @@ export default function Header() {
                         </a>
                     ))}
 
-                    <a href="#kontakt" className={styles.cta} onClick={() => { handleCta();         setOpen(false) }}>
+                    <a href="#kontakt" className={styles.cta} onClick={() => { handleCta(); setOpen(false) }}>
                         Zamów teraz →
                     </a>
                 </div>

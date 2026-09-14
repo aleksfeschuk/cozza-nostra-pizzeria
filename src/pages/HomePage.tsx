@@ -13,7 +13,7 @@ export default function HomePage () {
                 <MenuCarousel />
                 <About />
                 <Features />
-                <CtaBanner />
+                {/* <CtaBanner /> */}
             </main>
         </>
     )

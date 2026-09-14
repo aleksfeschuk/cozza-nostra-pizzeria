@@ -1,4 +1,5 @@
 import styles from '../styles/About.module.scss';
+import { track } from '../components/lib/analytics'
 
 export default function About() {
     return (
