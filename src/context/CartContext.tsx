@@ -1,4 +1,6 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+
+
 
 export type CartItem = {
     id: string
@@ -6,6 +8,7 @@ export type CartItem = {
     price: number
     quantity: number
 }
+
 
 type CartContextValue = {
     items: CartItem[]
@@ -21,7 +24,7 @@ type CartContextValue = {
     closeCart: () => void
 }
 
-const CartContext = createContext<CartContextValue | null>(null)
+const  CartContext = createContext<CartContextValue | null>(null)
 
 const STORAGE_KEY = 'cn_cart'
 
@@ -92,8 +95,10 @@ export default function CartProvider({ children }: { children: ReactNode}) {
     )
 }
 
+
 export function useCart() {
     const ctx = useContext(CartContext)
     if (!ctx) throw new Error('useCart() must be used inside <CartProvider>')
     return ctx
 }
+

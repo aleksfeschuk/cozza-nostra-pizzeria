@@ -1,4 +1,4 @@
-import { supabase} from './supabase';
+import { supabase } from './supabase';
 
 
 const VISITOR_KEY = 'cn_visitor_id'
@@ -17,6 +17,9 @@ export type AnalyticsEvent =
     | {type: 'cta_click'; label: string}
     | {type: 'menu_scroll'; direction: 'left' | 'right'}
     | {type: 'pizza_view'; name: string}
+    | {type: 'cart_add'; name: string}
+    | {type: 'cart_remove'; name: string}
+    | {type: 'order_placed'; label: string}
 
 export function track(event: AnalyticsEvent) {
     if (!supabase) return

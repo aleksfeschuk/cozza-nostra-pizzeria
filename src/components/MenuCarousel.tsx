@@ -3,6 +3,8 @@ import styles from '../styles/MenuCarousel.module.scss';
 import { ChevronLeftIcon, ChevronRightIcon } from './Icons'
 import { MENU } from "./data/menu";
 import { track } from "./lib/analytics";
+import { useCart } from "../context/CartContext";
+
 
 export default function MenuCarousel() {
     const trackRef = useRef<HTMLDivElement>(null)
@@ -10,6 +12,15 @@ export default function MenuCarousel() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [atStart, setAtStart] = useState(true)
     const [atEnd, setAtEnd] = useState(false)
+    const [justAdded, setJustAdded] = useState<string | null>(null)
+    const { addItem } = useCart() 
+
+    function handleAddCart(id: string, name: string, price: number) {
+        addItem(id, name, price)
+        track({ type: 'cart_add', name })
+        setJustAdded(id)
+        window.setTimeout(() => setJustAdded((current) => (current === id ? null : current)), 1200)
+    }
 
     function scrollByCards(direction: 'left' | 'right') {
         const el = trackRef.current
@@ -98,10 +109,10 @@ export default function MenuCarousel() {
                         <div className={styles.footer}>
                             <span className={styles.price}>{pizza.price}</span>
                             <button
-                                className={styles.addBtn}
-                                onClick={() => track({ type: 'cta_click', label: `add_${pizza.id}` })}
+                                className={justAdded === pizza.id ? styles.addBtnDone : styles.addBtn}
+                                onClick={() => handleAddCart(pizza.id, pizza.name, pizza.priceValue)} 
                             >
-                                Dodaj
+                                {justAdded === pizza.id ? 'Dodano ✓' : 'Dodaj' }
                             </button>
                         </div>
                     </div>
