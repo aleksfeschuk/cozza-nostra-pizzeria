@@ -3,6 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import styles from '../styles/Header.module.scss';
 import { CartIcon, MenuIcon, CloseIcon } from './Icons';
 import { track } from "./lib/analytics";
+import { useCart } from "../context/CartContext";
 
 
 const NAV = [
@@ -16,6 +17,7 @@ export default function Header() {
     const [open, setOpen] = useState(false)
     const location = useLocation()
     const isHome = location.pathname === '/'
+    const { totalCount, openCart } = useCart()
 
     function handleCta() {
         track({ type: 'cta_click', label: 'header_book'})
@@ -40,9 +42,9 @@ export default function Header() {
                         </nav>
 
                         <div className={styles.actions}>
-                            <a href="#menu" className={styles.cart}>
+                            <a href="button" className={styles.cart} onClick={openCart}>
                                 <CartIcon width={18} height={18} />
-                                Koszyk <span className={styles.badge}>0</span>
+                                Koszyk <span className={styles.badge}>{totalCount}</span>
                             </a>
                             <a href="#kontakt" className={styles.cta} onClick={handleCta}>
                                 Zamów teraz →
@@ -74,8 +76,6 @@ export default function Header() {
                     </a>
                 </div>
             )}
-
         </header>
     )
-
 }

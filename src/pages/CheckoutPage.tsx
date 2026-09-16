@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from '../styles/CheckoutPage.module.scss'
 import { CheckIcon } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { track } from "./lib/analytics";
+import { track } from "../components/lib/analytics";
 
 type DeliveryMethod = 'delivery' | 'pickup'
 
