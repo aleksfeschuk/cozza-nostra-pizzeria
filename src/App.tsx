@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import {Routes, Route, useLocation} from 'react-router-dom'
+import { AnimatePresence } from 'motion/react'
 import HomePage  from './pages/HomePage'
 import { trackPageView } from './components/lib/analytics'
 import CheckoutPage from './pages/CheckoutPage'
@@ -18,11 +19,13 @@ export default function App() {
     return (
 
         <CartProvider>
-            <Routes>
-                <Route  path="/" element={<HomePage />} />
-                <Route  path="/checkout" element={<CheckoutPage />} />
-            </Routes>
-
+            <AnimatePresence>
+                <Routes location={location} key={location.pathname}>
+                    <Route  path="/" element={<HomePage />} />
+                    <Route  path="/checkout" element={<CheckoutPage />} />
+                </Routes>
+            </AnimatePresence>
+            
             <CartDrawer />
         </CartProvider>
         
