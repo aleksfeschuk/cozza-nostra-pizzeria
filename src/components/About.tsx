@@ -1,5 +1,7 @@
+import { motion } from 'motion/react';
 import styles from '../styles/About.module.scss';
 import { track } from '../components/lib/analytics'
+import { slideLeft, slideRight } from 
 
 export default function About() {
     return (
