@@ -1,5 +1,7 @@
+import { motion } from "motion/react"
 import styles from "../styles/Features.module.scss"
 import { LeafIcon, FireIcon, DeliveryIcon, HeartIcon } from './Icons'
+import { stagger, staggerItem } from "./lib/animations"
 
 const FEATURES = [
     { icon: LeafIcon, title: 'Świeże składniki', sub: 'Tylko to, co najlepsze.' },
@@ -12,17 +14,25 @@ const FEATURES = [
 export default function Features() {
     return (
         <section className={styles.section}>
-            <div className={styles.inner}>
+            <motion.div 
+                className={styles.inner}
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px'}}
+            >
                 {FEATURES.map((f) => (
-                    <div key={f.title} className={styles.item}>
+                    <motion.div 
+                        key={f.title} 
+                        className={styles.item}
+                        variants={staggerItem}
+                    >
                         <f.icon width={26} height={26} />
                         <span className={styles.title}>{f.title}</span>
                         <span className={styles.sub}>{f.sub}</span>
-
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
-
+            </motion.div>
         </section>
     )
 }

@@ -1,15 +1,30 @@
 import { motion } from 'motion/react';
 import styles from '../styles/About.module.scss';
 import { track } from '../components/lib/analytics'
-import { slideLeft, slideRight } from 
+import { slideLeft, slideRight } from './lib/animations';
 
 export default function About() {
     return (
         <section className={styles.section}>
             <div className={styles.inner}>
-                <img className={styles.photo} src="src/images/pizzeria/how-this-work.jpeg" alt="Przygotowanie ciasta na pizzę" />
+                <motion.img 
+                    className={styles.photo} 
+                    src="src/images/pizzeria/how-this-work.jpeg" 
+                    alt="Przygotowanie ciasta na pizzę" 
+                    variants={slideLeft}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-80px'}}
+                />
                 
-                <div>
+                <motion.div
+                    variants={slideRight}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-80px'}}
+                    transition={{ delay: 0.1 }}
+                
+                >
                     <p className={styles.eyebrow}>O NAS</p>
                     <h2 className={styles.title}>Pasja do włoskiej pizzy</h2>
                     <p className={styles.body}>
@@ -26,7 +41,9 @@ export default function About() {
                     >
                         Poznaj nas →
                     </a>
-                </div>
+                </motion.div>
+
+                
             </div>
         </section>
     )

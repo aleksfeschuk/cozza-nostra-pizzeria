@@ -1,13 +1,21 @@
-import styles from '../styles/CtaBanners.module.scss'
+import { motion } from "motion/react"
+import styles from '../styles/CtaBanners.module.scss' 
 import { track } from './lib/analytics'
+import { scalePop } from './lib/animations'
 
 
 export default function CtaBanner() {
     return (
-        <section className={styles.section}>
-            <div className={styles.eyebrow}>ZAMÓW TERAZ</div>
+        <motion.div
+            className={styles.inner}
+            variants={scalePop}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px'}}
+        >
+            <p className={styles.eyebrow}>ZAMÓW TERAZ</p>
             <h2 className={styles.title}>Pizza na każdą okazję</h2>
-            <p className={styles.boyd}>
+            <p className={styles.body}>
                 Na spotkanie z przyjaciółmi, rodzinny obiad czy romantyczną
                 kolację. Nasza pizza zawsze się sprawdzi.
             </p>
@@ -18,6 +26,6 @@ export default function CtaBanner() {
             >
                 Zamów online →
             </a>
-        </section>
+        </motion.div>
     )
 }

@@ -1,53 +1,65 @@
+import { motion } from 'motion/react'
 import styles from '../styles/Hero.module.scss'
 import { PinIcon, ClockIcon, ArrowIcon } from './Icons'
 import { track } from './lib/analytics'
+import { slideLeft, slideRight } from './lib/animations'
 
 
 export default function Hero() {
     return (
         <section id="home" className={styles.hero}>
             <div className={styles.inner}>
-                <div>
-                    <p className={styles.eyebrow}>PRAWDZIWA WŁOSKA PIZZA</p>
-                    <h1 className={styles.title}>
-                        Tradycja,
-                        <br />
-                        która smakuje.
-                    </h1>
-                    <p className={styles.body}>
-                        Autentyczna neapolitańska pizza, świeże składniki i prawdziwa
-                        włoska atmosfera. Dostarczamy do Ciebie w Gdańsku — prosto z
-                        pieca.
-                    </p>
-                    <div className={styles.meta}>
-                        <span className={styles.item}>
-                            <PinIcon width={15} height={15} /> Gdańsk
-                        </span>
-                        <span className={styles.item}>
-                            <ClockIcon width={15} height={15} /> Otwarte 11:00 - 23:00
-                        </span>
-                    </div>
-                    <div className={styles.actions}>
-                        <a href="#kontakt"
-                        className={styles.btnPrimary}
-                        onClick={() => track({type: 'cta_click', label: 'hero_order'})}
-                        >
-                            Zamów teraz <ArrowIcon width={15} height={15} />
-                        </a>
-                        
-                        <a
-                            href="#menu"
-                            className={styles.btnOutline}
-                            onClick={() => track({ type: 'cta_click', label: 'hero_view_menu' })}
-                        >
-                            Zobacz menu
-                        </a>
-                    </div>
-                </div>
+                <motion.div
+                    variants={slideLeft}
+                    initial="hidden"
+                    animate="visible"
+                    >
+                        <p className={styles.eyebrow}>PRAWDZIWA WŁOSKA PIZZA</p>
+                        <h1 className={styles.title}>
+                            Tradycja,
+                            <br />
+                            która smakuje.
+                        </h1>
+                        <p className={styles.body}>
+                            Autentyczna neapolitańska pizza, świeże składniki i prawdziwa
+                            włoska atmosfera. Dostarczamy do Ciebie w Gdańsku — prosto z
+                            pieca.
+                        </p>
+                        <div className={styles.meta}>
+                            <span className={styles.item}>
+                                <PinIcon width={15} height={15} /> Gdańsk
+                            </span>
+                            <span className={styles.item}>
+                                <ClockIcon width={15} height={15} /> Otwarte 11:00 - 23:00
+                            </span>
+                        </div>
+                        <div className={styles.actions}>
+                            <a href="#kontakt"
+                            className={styles.btnPrimary}
+                            onClick={() => track({type: 'cta_click', label: 'hero_order'})}
+                            >
+                                Zamów teraz <ArrowIcon width={15} height={15} />
+                            </a>
+                            
+                            <a
+                                href="#menu"
+                                className={styles.btnOutline}
+                                onClick={() => track({ type: 'cta_click', label: 'hero_view_menu' })}
+                            >
+                                Zobacz menu
+                            </a>
+                        </div>
+                </motion.div>
 
-                <div className={styles.photo}>
-                    <img src="src/images/pizzeria/hero-section.jpeg" alt="Pizza Cosa Nostra" />
-                </div>
+                <motion.div 
+                    className={styles.photo}
+                    variants={slideRight}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{delay: 0.15}}
+                    >
+                        <img src="src/images/pizzeria/hero-section.jpeg" alt="Pizza Cosa Nostra" />
+                </motion.div>
             </div>
         </section>
     )

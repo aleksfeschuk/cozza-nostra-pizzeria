@@ -1,12 +1,19 @@
+import { motion } from 'motion/react'
 import styles from '../styles/LateHours.module.scss'
 import { MoonIcon } from '../components/Icons'
 import { track } from './lib/analytics'
+import { slideLeft, slideRight } from './lib/animations'
 
 export default function LateHours() {
     return (
         <section className={styles.lateSection}>
             <div className={styles.lateInner}>
-                <div className={styles.lateLeft}>
+                <motion.div 
+                    className={styles.lateLeft}
+                    variants={slideLeft}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{once: true, margin: '-60px'}}>
                     <MoonIcon width={22} height={22} className={styles.moonIcon} />
                     <div>
                         <div className={styles.lateTitle}>Pizza do późnych godzin</div>
@@ -22,12 +29,19 @@ export default function LateHours() {
                             Zamów teraz →
                         </a>
                     </div>
-                </div>
-                <div className={styles.openLate}>
-                    Open
-                    <br />
-                    Late
-                </div>
+                </motion.div>
+                <motion.div 
+                    className={styles.openLate}
+                    variants={slideRight}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{once: true, margin: '-60px'}}
+                    transition={{ delay: 0.15}}
+                    >
+                        Open
+                        <br />
+                        Late
+                </motion.div>
             </div>
         </section>
     )

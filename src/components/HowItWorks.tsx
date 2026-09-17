@@ -1,5 +1,7 @@
+import { motion } from 'motion/react'
 import styles from '../styles/HowItWorks.module.scss'
 import { track } from './lib/analytics'
+import { slideLeft, stagger, staggerItem } from './lib/animations'
 
 const STEPS = [
   { n: '01', title: 'Wybierasz pizzę', body: 'Przeglądasz nasze menu i dodajesz ulubione do koszyka.' },
@@ -11,7 +13,12 @@ export default function HoWItWorks() {
     return (
         <section id="jak-to-dziala" className={styles.section}>
             <div className={styles.inner}>
-                <div>
+                <motion.div
+                    variants={slideLeft}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{once: true, margin: '-60px'}}
+                >
                     <p className={styles.eyebrow}>JAK TO DZIAŁA</p>
                     <h2 className={styles.title}>Prosto i szybko</h2>
                     <p className={styles.body}>
@@ -25,17 +32,22 @@ export default function HoWItWorks() {
                     >
                         Zamów teraz →
                     </a>
-                </div>
+                </motion.div>
 
-                <div className={styles.steps}>
+                <motion.div 
+                    className={styles.steps}
+                    variants={stagger}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{once: true, margin: '-40px'}}>
                     {STEPS.map((s) => (
-                        <div key={s.n}>
+                        <motion.div key={s.n} variants={staggerItem}>
                             <div className={styles.num}>{s.n}</div>
                             <div className={styles.stepTitle}>{s.title}</div>
                             <div className={styles.stepBody}>{s.body}</div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     )

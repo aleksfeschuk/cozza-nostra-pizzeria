@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 import styles from '../styles/CartDrawer.module.scss'
 import { useCart } from "../hooks/useCart";
 import { CloseIcon } from "./Icons";
 import { track } from "./lib/analytics";
 import { MENU } from "./data/menu";
 import { TrashIcon } from "lucide-react";
+import { drawerVariants, overlayVariants } from "./lib/animations";
 
 export default function CardDrawer() {
     const { items, increment, decrement, removeItem, totalPrice, isOpen, closeCart} = useCart()
     const navigate = useNavigate()
 
-    if (!isOpen) return null
+    // if (!isOpen) return null
 
     function handleRemove(id: string, name: string) {
         removeItem(id)
@@ -29,8 +31,22 @@ export default function CardDrawer() {
 
     return (
         <>
-            <div className={styles.overlay} onClick={closeCart} />
-            <div className={styles.drawer} role="dialog" aria-label="Koszyk">
+            <motion.div 
+                className={styles.overlay} 
+                variants={overlayVariants}
+                initial="hidden"
+                animate={isOpen ? 'visible' : 'hidden'}
+                onClick={closeCart} 
+                style={{ pointerEvents: isOpen ? 'all' : 'none' }}
+            />
+            <motion.div 
+                className={styles.drawer} 
+                role="dialog" 
+                aria-label="Koszyk"
+                variants={drawerVariants}
+                initial="hidden"
+                animate={isOpen ? 'visible' : 'hidden'}
+            >
                 <div className={styles.header}>
                     <span className={styles.title}>Twój koszyk</span>
                     <button className={styles.closeBtn} onClick={closeCart} aria-label="Zamknij koszyk">
@@ -93,7 +109,7 @@ export default function CardDrawer() {
                         Przejdź do zamówienia →
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </>
     )
 }

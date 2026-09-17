@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from 'motion/react'
 import styles from '../styles/MenuCarousel.module.scss';
 import { ChevronLeftIcon, ChevronRightIcon } from './Icons'
 import { MENU } from "./data/menu";
 import { track } from "./lib/analytics";
 import { useCart } from "../hooks/useCart";
+import { fadeUp, stagger, staggerItem } from "./lib/animations";
 
 
 export default function MenuCarousel() {
@@ -65,7 +67,13 @@ export default function MenuCarousel() {
 
     return (
         <section id="menu" className={styles.section}>
-            <div className={styles.header}>
+            <motion.div 
+                className={styles.header}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true, amount: 0.3}}
+                >
                 <div>
                     <p className={styles.eyebrow}>NASZE MENU</p>
                     <h2 className={styles.title}>Najlepsze pizze w Gdańsku</h2>
@@ -93,13 +101,22 @@ export default function MenuCarousel() {
                         <ChevronRightIcon width={18} height={18} />
                     </button>
                 </div>
-            </div>
+            </motion.div>
 
-            <div className={styles.track} ref={trackRef} onScroll={updateEdgeState}>
+            <motion.div 
+                className={styles.track} 
+                ref={trackRef} 
+                onScroll={updateEdgeState}
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true, amount: 0.1}}
+            >
                 {MENU.map((pizza, i) => (
-                    <div
+                    <motion.div
                         key={pizza.id}
                         className={styles.card}
+                        variants={staggerItem}
                         ref={(el) => {cardRefs.current[i] = el}}
                         data-pizza-name={pizza.name}
                     >
@@ -115,9 +132,9 @@ export default function MenuCarousel() {
                                 {justAdded === pizza.id ? 'Dodano ✓' : 'Dodaj' }
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
             <div className={styles.dots}>
                 {MENU.map((pizza, i) => (
