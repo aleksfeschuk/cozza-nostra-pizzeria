@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/CartDrawer.module.scss'
-import { useCart } from '../context/CartContext'
+import { useCart } from "../hooks/useCart";
 import { CloseIcon } from "./Icons";
 import { track } from "./lib/analytics";
 import { MENU } from "./data/menu";

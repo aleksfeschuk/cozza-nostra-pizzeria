@@ -3,7 +3,7 @@ import styles from '../styles/MenuCarousel.module.scss';
 import { ChevronLeftIcon, ChevronRightIcon } from './Icons'
 import { MENU } from "./data/menu";
 import { track } from "./lib/analytics";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 
 
 export default function MenuCarousel() {

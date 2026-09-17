@@ -3,7 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 import styles from '../styles/Header.module.scss';
 import { CartIcon, MenuIcon, CloseIcon } from './Icons';
 import { track } from "./lib/analytics";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 
 
 const NAV = [
@@ -42,10 +42,10 @@ export default function Header() {
                         </nav>
 
                         <div className={styles.actions}>
-                            <a href="button" className={styles.cart} onClick={openCart}>
+                            <button type="button" className={styles.cart} onClick={openCart}>
                                 <CartIcon width={18} height={18} />
                                 Koszyk <span className={styles.badge}>{totalCount}</span>
-                            </a>
+                            </button>
                             <a href="#kontakt" className={styles.cta} onClick={handleCta}>
                                 Zamów teraz →
                             </a>
