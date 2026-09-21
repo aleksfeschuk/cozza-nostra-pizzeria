@@ -6,6 +6,7 @@ import { MENU } from "./data/menu";
 import { track } from "./lib/analytics";
 import { useCart } from "../hooks/useCart";
 import { fadeUp, stagger, staggerItem } from "./lib/animations";
+import { FullMenuModal  } from "./FullMenuModal";
 
 
 export default function MenuCarousel() {
@@ -15,6 +16,7 @@ export default function MenuCarousel() {
     const [atStart, setAtStart] = useState(true)
     const [atEnd, setAtEnd] = useState(false)
     const [justAdded, setJustAdded] = useState<string | null>(null)
+    const [fullMenuOpen, setFullMenuOpen] = useState(false)
     const { addItem } = useCart() 
 
     function handleAddCart(id: string, name: string, price: number) {
@@ -73,7 +75,7 @@ export default function MenuCarousel() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{once: true, amount: 0.3}}
-                >
+            >
                 <div>
                     <p className={styles.eyebrow}>NASZE MENU</p>
                     <h2 className={styles.title}>Najlepsze pizze w Gdańsku</h2>
@@ -143,13 +145,27 @@ export default function MenuCarousel() {
             </div>
 
             <div className={styles.fullMenuWrap}>
-                <a 
-                    href="#menu"
+                <motion.div
+                    type="button"
                     className={styles.fullMenuBtn}
-                    onClick={() => track({ type: 'cta_click', label: 'full_menu'})}    
+                    onClick={() => {
+                        setFullMenuOpen(true)
+                        track({ type: 'cta_click', label: "full_menu_modal" })
+                    }}
+                    whileHover={{
+                        y: -2,
+                        boxShadow: '0 8px 24px rgba(34,29,24,0.16)',
+                        transition: { type: 'spring', stiffness: 320, damping: 24},
+                    }}
+                    whileTap={{ scale: 0.97, y: 1}}
                 >
                     Zobacz pełne menu
-                </a>
+                </motion.div>
+
+                <FullMenuModal 
+                    isOpen={fullMenuOpen}
+                    onClose={() => setFullMenuOpen(false)}
+                />
             </div>
         </section>
     )
