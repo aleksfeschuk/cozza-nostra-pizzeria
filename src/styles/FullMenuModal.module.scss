@@ -1,0 +1,210 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(#08090A, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: $space-6 $space-3;
+}
+
+// Modal panel itself
+.modal {
+    width: 100%;
+    max-width: 1200px;
+    background: $cream;
+    border-radius: 20px;
+    padding: $space-6 $space-6 $space-7;
+    position: relative;
+
+    @media (max-width: $bp-mobile) {
+        padding: $space-4 $space-3 $space-5;
+        border-radius: 14px;
+    }
+}
+
+// Header row inside modal
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-5;
+    padding-bottom: $space-4;
+    border-bottom: 1px solid $card-border;
+}
+
+.title {
+    font-family: $font-display;
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.closeBtn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid $card-border;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: $text-dark;
+    transition: background 0.18s ease, border-color 0.18s ease;
+
+    &:hover {
+        background: $card-border;
+        border-color: darken($card-border, 10%);
+    }
+}
+
+// Search bar
+.searchWrap {
+    margin-bottom: $space-5;
+    position: relative;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $muted;
+    pointer-events: none;
+}
+
+.search {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border-radius: 10px;
+    border: 1.5px solid $card-border;
+    font-size: 14px;
+    font-family: $font-body;
+    background: #fff;
+    color: $text-dark;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder { color: $muted; }
+
+    &:focus {
+        outline: none;
+        border-color: $red;
+        box-shadow: 0 0 0 3px rgba($red, 0.1);
+    }
+}
+
+// Pizza grid — 3 cols desktop, 2 tablet, 1 mobile
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-4;
+
+    @media (max-width: $bp-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $bp-mobile) {
+        grid-template-columns: 1fr;
+        gap: $space-3;
+    }
+}
+
+// Empty search state
+.empty {
+    text-align: center;
+    padding: $space-8 0;
+    color: $muted;
+    font-size: 15px;
+}
+
+// Pizza card inside modal
+.card {
+    background: #fff;
+    border: 1px solid $card-border;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.photoWrap {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: $placeholder-fill;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cardBody {
+    padding: $space-3;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.name {
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.desc {
+    margin-top: 4px;
+    font-size: 12px;
+    color: $muted;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.cardFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: $space-3;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+}
+
+.addBtn {
+    border: none;
+    background: $red;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+
+    &:hover {
+        background: $red-dark;
+    }
+}
+
+.addBtnDone {
+    @extend .addBtn;
+    background: #3e7d3a;
+    &:hover { background: #3e7d3a; }
+}
+
+.count {
+    margin-top: $space-4;
+    font-size: 13px;
+    color: $muted;
+    text-align: center;
+}
