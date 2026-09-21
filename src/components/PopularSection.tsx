@@ -9,7 +9,7 @@ import { stagger, staggerItem } from "./lib/animations";
 const SIZES: PizzaSize[] = ['S', 'M', 'L']
 const SIZE_LABEL: Record<PizzaSize, string> = {S: '25cm', M: '30cm', L: '40cm' }
 
-export function PopularSection() {
+export default function PopularSection() {
     const [selectedSizes, setSelectedSizes] = useState<Record<string, PizzaSize>>(
         Object.fromEntries(POPULAR.map(p => [p.id, 'M']))
     )
@@ -36,7 +36,7 @@ export function PopularSection() {
                 <p className={styles.eyebrow}>⭐ NAJPOPULARNIEJSZE</p>
                 <h2 className={styles.title}>Najczęściej wybierane</h2>
                 <p className={styles.sub}>
-                Najczęściej wybierane pizze Cosa Nostra — każda dostępna w 3 rozmiarach.
+                    Najczęściej wybierane pizze Cosa Nostra — każda dostępna w 3 rozmiarach.
                 </p>
 
                 <motion.div

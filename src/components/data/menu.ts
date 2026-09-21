@@ -58,7 +58,6 @@ export const MENU: PizzaItem[] = [
     price: '29 zł',
     priceBase: 29,
     image: 'src/images/pizza/margherita.jpg', 
-    popular: true,
   },
   { 
     id: 'margherita-szynka', 

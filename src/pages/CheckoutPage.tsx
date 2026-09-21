@@ -28,6 +28,38 @@ export default function CheckoutPage() {
     const [submitting, setSubmitting] = useState(false)
     const [orderId, setOrderId] = useState<string | null>(null)
 
+    const [promoInput, setPromoInput] = useState('')
+    const [promoApplied, setPromoApplied] = useState<string | null>(null)
+    const [promoError, setPromoError] = useState<string | null>(null)
+    const [discount, setDiscount] = useState(0)
+
+    const PROMO_CODES: Record<string, { type: 'percent' | 'fixed'; value: number; label: string }> = {
+        PIZZA10:  { type: 'percent', value: 10, label: '-10%' },
+        NOSTRA20: { type: 'percent', value: 20, label: '-20%' },
+        WELCOME:  { type: 'fixed',   value: 5,  label: '-5 zł' },
+        OPEN10:   { type: 'percent', value: 10, label: '-10% (kod powitalny)' },
+    }
+
+    function applyPromo() {
+        const code = promoInput.trim().toUpperCase()
+        const promo = PROMO_CODES[code]
+
+        if (!promo) {
+            setPromoError('Nieprawidłowy kod. Sprawdź pisownię.')
+            setPromoApplied(null)
+            setDiscount(0)
+            return
+        } 
+        setPromoError(null)
+        setPromoApplied(promo.label)
+        const base = totalPrice + (method === 'delivery' ? 8 : 0)
+        setDiscount(
+            promo.type === 'percent'
+            ? Math.round(base * promo.value / 100)
+            : promo.value
+        )
+    }
+
     const deliveryFee = method === 'delivery' && totalPrice > 0 ? 8 : 0
     const grandTotal = totalPrice + deliveryFee
 
@@ -328,6 +360,51 @@ export default function CheckoutPage() {
                             )}
                         </AnimatePresence>
                     </div>
+
+                    <div className={styles.section}>
+                        <div className={styles.sectionTitle}>Kod rabatowy</div>
+                        <div className={styles.promoRow}>
+                            <input
+                                className={styles.input}
+                                placeholder="np. PIZZA10"
+                                value={promoInput}
+                                onChange={e => { setPromoInput(e.target.value); setPromoError(null) }}
+                                disabled={!!promoApplied}
+                            />
+                            {promoApplied ? (
+                                <motion.button
+                                    type="button"
+                                    className={styles.promoRemoveBtn}
+                                    onClick={() => { setPromoApplied(null);  setDiscount(0); setPromoInput('') }}
+                                    whileTap={{ scale: 0.95}}
+                                >
+                                    Usuń
+                                </motion.button>
+                            ) : (
+                                <motion.button
+                                    type="button"
+                                    className={styles.promoBtn}
+                                    onClick={applyPromo}
+                                    whileHover={{y: -1}}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    Zastosuj
+                                </motion.button>
+                            )}
+                        </div>
+                        {promoError && <p className={styles.promoError}>{promoError}</p>}
+                        {promoApplied && (
+                            <motion.p
+                            className={styles.promoSuccess}
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            >
+                                ✓ Zastosowano: {promoApplied} — oszczędzasz {discount} zł!
+                            </motion.p>
+                        )}
+
+                    </div>
+
 
                     {error && <p className={styles.errorText}>{error}</p>}
 

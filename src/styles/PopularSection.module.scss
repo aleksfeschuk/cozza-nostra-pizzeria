@@ -2,7 +2,7 @@
 
 
 .section {
-    background: $ink;
+    background: $cream;
     padding-block: $space-9;
 
     @media (max-width: $bp-mobile) {
@@ -27,7 +27,7 @@
     font-family: $font-display;
     font-size: 36px;
     font-weight: 700;
-    color: $text-on-ink;
+    color: $ink;
 
     @media (max-width: $bp-mobile) {
         font-size: 26px;
@@ -37,7 +37,7 @@
 .sub {
     margin-top: $space-2;
     font-size: 14px;
-    color: $muted-on-ink;
+    color: $ink-soft;
 }
 
 .grid {
@@ -54,7 +54,7 @@
 
 // Each popular pizza card — landscape on mobile, portrait on desktop
 .card {
-    background: #111315;
+    background: $ink;
     border: 1px solid rgba(#fff, 0.08);
     border-radius: 16px;
     overflow: hidden;
@@ -73,12 +73,12 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     padding: 4px 10px;
-    border-radius: 999px;
+    border-radius: 10px;
     z-index: 1;
 }
 
 .photoWrap {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
 }
 
@@ -171,7 +171,7 @@
     font-size: 13px;
     font-weight: 700;
     padding: 10px 18px;
-    border-radius: 10px;
+    border-radius: 2px;
     cursor: pointer;
     font-family: $font-body;
     transition: background 0.15s ease;
