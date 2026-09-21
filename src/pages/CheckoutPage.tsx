@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 import styles from '../styles/CheckoutPage.module.scss'
 import { CheckIcon } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { track } from "../components/lib/analytics";
 
 type DeliveryMethod = 'delivery' | 'pickup'
+type PaymentMethod = 'card' | 'cash' | 'cash_on_delivery'
 
 export default function CheckoutPage() {
     const { items, totalPrice, clear } = useCart()
     
     const [method, setMethod] = useState<DeliveryMethod>('delivery')
+    const [payment, setPayment] = useState<PaymentMethod>('card')
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [street, setStreet] = useState('')
@@ -36,10 +39,12 @@ export default function CheckoutPage() {
             return 'Podaj adres dostawy.'
         }
 
-        if (!cardNumber.trim() || !cardExpiry.trim() || !cardCvv.trim() || !cardName.trim()) {
-            return 'Uzupełnij dane karty.'
+        if (payment === 'card') { 
+        
+            if (!cardNumber.trim() || !cardExpiry.trim() || !cardCvv.trim() || !cardName.trim()) {
+                return 'Uzupełnij dane karty.'
+            }
         }
-
         return null
     }
 
@@ -61,7 +66,7 @@ export default function CheckoutPage() {
             setOrderId(id)
             track({
                 type: 'order_placed',
-                label: `${items.reduce((n, i) => n + i.quantity, 0)} pizz, ${grandTotal} zł, ${method}`,
+                label: `${items.reduce((n, i) => n + i.quantity, 0)} pizz, ${grandTotal} zł, ${method}, ${payment}`,
             })
             clear()
             setSubmitting(false)
@@ -107,16 +112,16 @@ export default function CheckoutPage() {
                         <div className={styles.sectionTitle}>Sposób odbioru</div>
                         <div className={styles.deliveryToggle}>
                             <button
-                            type="button"
-                            className={method === 'delivery' ? styles.toggleBtnActive : styles.toggleBtn}
-                            onClick={() => setMethod('delivery')}
+                                type="button"
+                                className={method === 'delivery' ? styles.toggleBtnActive : styles.toggleBtn}
+                                onClick={() => setMethod('delivery')}
                             >
                                 Dostawa
                             </button>
                             <button
-                            type="button"
-                            className={method === 'pickup' ? styles.toggleBtnActive : styles.toggleBtn}
-                            onClick={() => setMethod('pickup')}
+                                type="button"
+                                className={method === 'pickup' ? styles.toggleBtnActive : styles.toggleBtn}
+                                onClick={() => setMethod('pickup')}
                             >
                             Odbiór osobisty
                             </button>
@@ -124,7 +129,7 @@ export default function CheckoutPage() {
 
                         <div className={styles.field}>
                             <label className={styles.label} htmlFor="name">
-                            Imię i nazwisko
+                                Imię i nazwisko
                             </label>
                             <input
                                 id="name"
@@ -166,27 +171,27 @@ export default function CheckoutPage() {
 
                                 <div className={styles.fieldRow}>
                                     <div className={styles.field}>
-                                    <label className={styles.label} htmlFor="city">
-                                        Miasto
-                                    </label>
-                                    <input
-                                        id="city"
-                                        className={styles.input}
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)}
-                                    />
+                                        <label className={styles.label} htmlFor="city">
+                                            Miasto
+                                        </label>
+                                        <input
+                                            id="city"
+                                            className={styles.input}
+                                            value={city}
+                                            onChange={(e) => setCity(e.target.value)}
+                                        />
                                     </div>
                                     <div className={styles.field}>
-                                    <label className={styles.label} htmlFor="postal">
-                                        Kod pocztowy
-                                    </label>
-                                    <input
-                                        id="postal"
-                                        className={styles.input}
-                                        value={postalCode}
-                                        onChange={(e) => setPostalCode(e.target.value)}
-                                        placeholder="80-000"
-                                    />
+                                        <label className={styles.label} htmlFor="postal">
+                                            Kod pocztowy
+                                        </label>
+                                        <input
+                                            id="postal"
+                                            className={styles.input}
+                                            value={postalCode}
+                                            onChange={(e) => setPostalCode(e.target.value)}
+                                            placeholder="80-000"
+                                        />
                                     </div>
                                 </div>
                             </>
@@ -194,69 +199,134 @@ export default function CheckoutPage() {
                     </div>
 
                     <div className={styles.section}>
-                        <div className={styles.sectionTitle}>Płatność kartą</div>
-                        <div className={styles.cardIcons}>VISA · Mastercard (demo — bez realnej płatności)</div>
+                        <div className={styles.sectionTitle}>Metoda płatności</div>
 
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="cardName">
-                                Imię i nazwisko na karcie
-                            </label>
-                            <input
-                                id="cardName"
-                                className={styles.input}
-                                value={cardName}
-                                onChange={(e) => setCardName(e.target.value)}
-                                placeholder="Jan Kowalski"
-                            />
+                        <div className={styles.paymentGrid}>
+                            {[
+                                { value: 'card' as PaymentMethod, label: 'Karta płatnicza', icon: '💳', sub: 'VISA · Mastercard' },
+                                { value: 'cash' as PaymentMethod, label: 'Gotówka', icon: '💵', sub: 'Płatność przy odbiorze' },
+                                { value: 'cash_on_delivery' as PaymentMethod, label: 'Za pobraniem', icon: '🚚', sub: 'Kurier pobiera gotówkę' },
+                            ].map(opt => (
+                                <motion.button
+                                    key={opt.value}
+                                    type="button"
+                                    className={payment === opt.value ? styles.payOptActive : styles.payOpt}
+                                    onClick={() => setPayment(opt.value)}
+                                    whileHover={{ y: -2 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    transition= {{ type: 'spring', stiffness: 400, damping: 24}}
+                                >
+                                    <span className={styles.payOptIcon}>{opt.icon}</span>
+                                    <span className={styles.payOptLabel}>{opt.label}</span>
+                                    <span className={styles.payOptSub}>{opt.sub}</span>
+                                    {payment === opt.value && (
+                                        <motion.span
+                                            className={styles.payOptCheck}
+                                            initial={{ scale: 0}}
+                                            animate={{ scale: 1}}
+                                            transition={{ type: 'spring', stiffness: 600, damping: 22}}
+                                        >
+                                            ✓  
+                                        </motion.span>
+                                    )}
+                                </motion.button>
+                            ))}
                         </div>
 
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor="cardNumber">
-                                Numer karty
-                            </label>
-                            <input
-                                id="cardNumber"
-                                className={styles.input}
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}
-                                placeholder="4242 4242 4242 4242"
-                                inputMode="numeric"
-                            />
-                        </div>
+                        <AnimatePresence>
+                            {payment === 'card' && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                style={{ overflow: 'hidden' }}
+                            >
+                                <div style={{paddingTop: '20px'}}>
+                                    <div className={styles.cardIcons}>
+                                        VISA · Mastercard (demo — bez realnej płatności)
+                                    </div>
 
-                        <div className={styles.fieldRow}>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="cardExpiry">
-                                    Data ważności
-                                </label>
-                                <input
-                                    id="cardExpiry"
-                                    className={styles.input}
-                                    value={cardExpiry}
-                                    onChange={(e) => setCardExpiry(e.target.value)}
-                                    placeholder="MM/RR"
-                                />
-                            </div>
-                            <div className={styles.field}>
-                                <label className={styles.label} htmlFor="cardCvv">
-                                    CVV
-                                </label>
-                                <input
-                                    id="cardCvv"
-                                    className={styles.input}
-                                    value={cardCvv}
-                                    onChange={(e) => setCardCvv(e.target.value)}
-                                    placeholder="123"
-                                    inputMode="numeric"
-                                />
-                            </div>
-                        </div>
+                                    <div className={styles.field}>
+                                        <label className={styles.label} htmlFor="cardName">
+                                            Imię i nazwisko na karcie
+                                        </label>
+                                        <input
+                                            id="cardName"
+                                            className={styles.input}
+                                            value={cardName}
+                                            onChange={(e) => setCardName(e.target.value)}
+                                            placeholder="Jan Kowalski"
+                                        />
+                                    </div>
 
-                        <p className={styles.payNote}>
-                            To pole płatności jest demonstracyjne — nie łączy się z
-                            żadnym prawdziwym operatorem płatności. Podłącz Stripe,
-                            PayU lub Przelewy24 przed uruchomieniem produkcyjnym.
-                        </p>
+                                    <div className={styles.field}>
+                                        <label className={styles.label} htmlFor="cardNumber">
+                                            Numer karty
+                                        </label>
+                                        <input
+                                            id="cardNumber"
+                                            className={styles.input}
+                                            value={cardNumber}
+                                            onChange={(e) => setCardNumber(e.target.value)}
+                                            placeholder="4242 4242 4242 4242"
+                                            inputMode="numeric"
+                                        />
+                                    </div>
+
+                                    <div className={styles.fieldRow}>
+                                        <div className={styles.field}>
+                                            <label className={styles.label} htmlFor="cardExpiry">
+                                                Data ważności
+                                            </label>
+                                            <input
+                                                id="cardExpiry"
+                                                className={styles.input}
+                                                value={cardExpiry}
+                                                onChange={(e) => setCardExpiry(e.target.value)}
+                                                placeholder="MM/RR"
+                                            />
+                                        </div>
+                                        <div className={styles.field}>
+                                            <label className={styles.label} htmlFor="cardCvv">
+                                                CVV
+                                            </label>
+                                            <input
+                                                id="cardCvv"
+                                                className={styles.input}
+                                                value={cardCvv}
+                                                onChange={(e) => setCardCvv(e.target.value)}
+                                                placeholder="123"
+                                                inputMode="numeric"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <p className={styles.payNote}>
+                                        Pole demonstracyjne — podłącz Stripe lub PayU przed
+                                        uruchomieniem produkcyjnym.
+                                    </p>
+                                </div>
+                            </motion.div>
+                            )}
+                        </AnimatePresence>
+                        
+
+                        <AnimatePresence>
+                            {(payment === 'cash' || payment === 'cash_on_delivery') && (
+                                <motion.div
+                                    className={styles.cashNote}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 8 }}
+                                    transition={{ duration: 0.25 }}
+                                >
+                                    {payment === 'cash'
+                                        ? '💵 Przygotuj gotówkę przy odbiorze osobistym lub dostawie.'
+                                        : '🚚 Kurier pobierze gotówkę przy dostarczeniu zamówienia.'}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     {error && <p className={styles.errorText}>{error}</p>}
