@@ -1,59 +1,87 @@
+export const SIZE_MULTIPLIERS = {
+  S: -4,
+  M: 0,
+  L: 6,
+} as const
+
+export type PizzaSize = keyof typeof SIZE_MULTIPLIERS
+
+
 export type PizzaItem = {
     id: string;
     name: string;
     description: string;
+    priceBase: number;
     price: string;
-    priceValue: number;
     image: string;
+    popular?: boolean;
 }
+
+
+export function priceForSize(base: number, size: PizzaSize): number {
+  return base + SIZE_MULTIPLIERS[size]
+}
+
 
 export const MENU: PizzaItem[] = [
   { 
+    id: 'quatro-formaggi', 
+    name: 'Quatro formaggi', 
+    description: 'Biały sos, mozzarella, gorgonzola, Grana Padano, provolone.',
+    price: '40 zł', 
+    priceBase: 40,
+    image: 'src/images/pizza/quattro.jpg' ,
+    popular: true
+  },
+  { 
+    id: 'wiejska', 
+    name: 'Wiejska', 
+    description: 'Sos biały, pieczarki, pancetta Napoli, cebula, ogórek kiszony.',
+    price: '41 zł', 
+    priceBase: 41,
+    image: 'src/images/pizza/carbonara.jpg',
+    popular: true
+  },
+  { 
+    id: 'parma', 
+    name: 'Parma', 
+    description: 'Sos pomidorowy, mozzarella, szynka parmeńska, rukola, cherry, Grana Padano.',
+    price: '45 zł',
+    priceBase: 45, 
+    image: 'src/images/pizza/prosciutto.jpg',
+    popular: true
+  },
+  { 
     id: 'margherita', 
     name: 'Margherita', 
-    description: 'Sos pomidorowy, mozzarella, świeża bazylia, oliwa z oliwek', 
+    description: 'Sos pomidorowy, mozzarella, bazylia.',
     price: '29 zł',
-    priceValue: 29,
-    image: 'src/images/pizza/margherita.jpg' 
+    priceBase: 29,
+    image: 'src/images/pizza/margherita.jpg', 
+    popular: true,
   },
   { 
     id: 'margherita-szynka', 
     name: 'Margherita z szynką', 
-    description: 'Sos pomidorowy, mozzarella, szynka, oregano', 
+    description: 'Sos pomidorowy, mozzarella, cotto.',
     price: '32 zł', 
-    priceValue: 32,
+    priceBase: 32,
     image: 'src/images/pizza/margherita.jpg' 
   },
   { 
     id: 'prosciutto-funghi', 
     name: 'Prosciutto e funghi', 
-    description: 'Sos pomidorowy, mozzarella, prosciutto, pieczarki', 
+    description: 'Sos pomidorowy, mozzarella, pieczarki, cotto.',
     price: '33 zł', 
-    priceValue: 33,
+    priceBase: 33,
     image: 'src/images/pizza/prosciutto.jpg' 
-  },
-  { 
-    id: 'parma', 
-    name: 'Parma', 
-    description: 'Sos pomidorowy, mozzarella, prosciutto di Parma, rukola', 
-    price: '45 zł',
-    priceValue: 45, 
-    image: 'src/images/pizza/prosciutto.jpg' 
-  },
-  { 
-    id: 'quatro-formaggi', 
-    name: 'Quatro formaggi', 
-    description: 'Mozzarella, gorgonzola, parmezan, taleggio, sery', 
-    price: '40 zł', 
-    priceValue: 40,
-    image: 'src/images/pizza/quattro.jpg' 
   },
   { 
     id: 'napoli', 
     name: 'Napoli', 
     description: 'Sos pomidorowy, mozzarella, kapary, anchois, oliwki', 
     price: '34 zł', 
-    priceValue: 34,
+    priceBase: 34,
     image: 'src/images/pizza/verde.jpg' 
   },
   { 
@@ -61,7 +89,7 @@ export const MENU: PizzaItem[] = [
     name: 'Diavola', 
     description: 'Sos pomidorowy, mozzarella, spicy salami, chili, oregano', 
     price: '44 zł',
-    priceValue: 44, 
+    priceBase: 44, 
     image: 'src/images/pizza/diavola.jpg' 
   },
   { 
@@ -69,15 +97,9 @@ export const MENU: PizzaItem[] = [
     name: 'Tartufo', 
     description: 'Sos śmietanowy, mozzarella, truflowy, pieczarki, parmezan', 
     price: '45 zł',
-    priceValue: 45, 
+    priceBase: 45, 
     image: 'src/images/pizza/carbonara.jpg' 
   },
-  { 
-    id: 'wiejska', 
-    name: 'Wiejska', 
-    description: 'Sos pomidorowy, mozzarella, kiełbasa, boczek, cebula', 
-    price: '41 zł', 
-    priceValue: 41,
-    image: 'src /images/pizza/carbonara.jpg' 
-  },
 ]
+
+export const POPULAR = MENU.filter(p => p.popular)
