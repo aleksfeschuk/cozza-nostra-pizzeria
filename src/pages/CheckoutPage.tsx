@@ -458,7 +458,7 @@ export default function CheckoutPage() {
                     ) : (
                     <>
                         {items.map((item) => (
-                        <div key={item.id} className={styles.summaryRow}>
+                        <div key={`${item.id}-${item.size}`} className={styles.summaryRow}>
                             <span className={styles.summaryRowName}>{item.name}</span>
                             <span className={styles.summaryRowQty}>×{item.quantity}</span>
                             <span>{item.price * item.quantity} zł</span>

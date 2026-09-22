@@ -14,13 +14,13 @@ export default function CardDrawer() {
 
     // if (!isOpen) return null
 
-    function handleRemove(id: string, name: string) {
-        removeItem(id)
+    function handleRemove(id: string, name: string, size: import('../components/data/menu').PizzaSize) {
+        removeItem(id, size)
         track({ type: 'cart_remove', name})
     }
 
-    function handleDecrement(id: string, name: string, quantity: number) {
-        decrement(id)
+    function handleDecrement(id: string, name: string, size: import('../components/data/menu').PizzaSize, quantity: number) {
+        decrement(id, size)
         if (quantity <= 1) track({ type: 'cart_remove', name})
     }
 
@@ -64,7 +64,7 @@ export default function CardDrawer() {
                         items.map((item) => {
                             const pizza = MENU.find((p) => p.id === item.id)
                             return (
-                                <div key={item.id} className={styles.row}>
+                                <div key={`${item.id}-${item.size}`} className={styles.row}>
                                     {pizza && <img className={styles.rowPhoto} src={pizza.image} alt={item.name}/>}
                                     <div className={styles.rowInfo}>
                                         <div className={styles.rowName}>{item.name}</div>
@@ -72,7 +72,7 @@ export default function CardDrawer() {
                                         <div className={styles.qty} style={{marginTop: 6}}>
                                             <button
                                                 className={styles.qtyBtn}
-                                                onClick={() => handleDecrement(item.id, item.name, item.quantity)}
+                                                onClick={() => handleDecrement(item.id, item.name, item.size, item.quantity)}
                                                 aria-label="Zmniejsz ilość"
                                             >
                                                 -
@@ -80,7 +80,7 @@ export default function CardDrawer() {
                                             <span className={styles.qtyValue}>{item.quantity}</span>
                                             <button
                                                 className={styles.qtyBtn}
-                                                onClick = {() => increment(item.id)}
+                                                onClick = {() => increment(item.id, item.size)}
                                                 aria-label="Zwiększ ilość"
                                             >
                                                 +
@@ -89,7 +89,7 @@ export default function CardDrawer() {
                                     </div>
                                     <button
                                         className={styles.removeBtn}
-                                        onClick={() => handleRemove(item.id, item.name)}
+                                        onClick={() => handleRemove(item.id, item.name, item.size)}
                                         aria-label={`Usuń ${item.name} z koszyka`}
                                     >
                                         <TrashIcon />

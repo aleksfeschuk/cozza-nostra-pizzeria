@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { CartContext } from './CartContext'
+import type { PizzaSize } from '../components/data/menu'
 
 
 export type CartItem = {
@@ -7,6 +8,7 @@ export type CartItem = {
     name: string
     price: number
     quantity: number
+    size: PizzaSize
 }
 
 
@@ -27,27 +29,27 @@ export default function CartProvider({ children }: { children: ReactNode}) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
     }, [items])
 
-    function addItem(id: string, name: string, price: number) {
+    function addItem(id: string, name: string, price: number, size: PizzaSize) {
         setItems((prev) => {
-            const existing = prev.find((i) => i.id === id)
+            const existing = prev.find((i) => i.id === id && i.size === size)
             if (existing) {
-                return prev.map((i) => (i.id === id ? { ...i, quantity: i.quantity + 1} : i))
+                return prev.map((i) => (i.id === id && i.size === size ? { ...i, quantity: i.quantity + 1} : i))
             }
-            return [...prev, {id, name, price, quantity: 1}]
+            return [...prev, {id, name, price, quantity: 1, size}]
         })
     }
 
-    function removeItem(id: string) {
-        setItems((prev) => prev.filter((i) => i.id !== id))
+    function removeItem(id: string, size: PizzaSize) {
+        setItems((prev) => prev.filter((i) => !(i.id === id && i.size === size)))
     }
 
-    function increment(id: string) {
-        setItems((prev) => prev.map((i) => (i.id === id ? {...i, quantity: i.quantity + 1} : i)))
+    function increment(id: string, size: PizzaSize) {
+        setItems((prev) => prev.map((i) => (i.id === id && i.size === size ? {...i, quantity: i.quantity + 1} : i)))
     }
 
-    function decrement(id: string) {
+    function decrement(id: string, size: PizzaSize) {
         setItems((prev) => 
-            prev.map((i) => (i.id === id ? {...i, quantity: i.quantity - 1} : i)).filter((i) => i.quantity > 0)
+            prev.map((i) => (i.id === id && i.size === size ? {...i, quantity: i.quantity - 1} : i)).filter((i) => i.quantity > 0)
         )
     }
 
