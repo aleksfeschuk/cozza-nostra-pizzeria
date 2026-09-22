@@ -22,6 +22,8 @@ export function priceForSize(base: number, size: PizzaSize): number {
   return base + SIZE_MULTIPLIERS[size]
 }
 
+export const SIZES: PizzaSize[] = ['S', 'M', 'L']
+export const SIZE_CM: Record<PizzaSize, string> = { S: '25cm', M: '30cm', L: '40cm' }
 
 export const MENU: PizzaItem[] = [
   { 

@@ -89,6 +89,12 @@
     width: 260px;
     display: flex;
     flex-direction: column;
+    // Needed so the zooming photo clips inside the card's border-radius
+    border-radius: $radius-md;
+    background: $card;
+    border: 1px solid $card-border;
+    overflow: hidden;
+    cursor: pointer;
 
     @media (max-width: $bp-mobile) {
         width: 210px;
@@ -96,12 +102,27 @@
 }
 
 
+.photoWrap {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  background: $placeholder-fill;
+}
+
 .photo {
-    aspect-ratio: 4 / 3;
-    width: 100%;
-    border-radius: $radius-sm;
-    background: $placeholder-fill;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  // transition is handled by Framer Motion whileHover on the img
+}
+
+
+.cardBody {
+  padding: $space-3;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .name {
@@ -117,6 +138,39 @@
     color: $muted;
     line-height: 1.5;
     min-height: 34px;
+}
+
+.sizes {
+    display: flex;
+    gap: 5px;
+    margin-bottom: $space-2;
+}
+
+.sizeBtn {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1.5px solid $card-border;
+    background: #fff;
+    color: $muted;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: $font-body;
+    transition: all 0.15s ease;
+
+    &:hover {
+        border-color: darken($card-border, 20%);
+        color: $text-dark;
+    }
+}
+
+.sizeBtnActive {
+    @extend .sizeBtn;
+    border-color: $red;
+    background: $red;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba($red, 0.35);
 }
 
 .footer {

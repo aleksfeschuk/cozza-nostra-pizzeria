@@ -20,7 +20,9 @@ export default function HomePage () {
             <Header />
             <main>
                 <Hero />
+
                 <PopularSection />
+
                 <MenuCarousel />
                 <About />
                 <Features />

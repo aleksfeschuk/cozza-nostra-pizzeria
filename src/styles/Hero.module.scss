@@ -70,8 +70,9 @@
     gap: $space-3;
 }
 
-.btnPrimaty {
-    @include button-primary
+.btnPrimary {
+    @include button-primary;
+
 }
 
 .btnOutline {

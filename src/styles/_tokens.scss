@@ -93,8 +93,10 @@ $bp-mobile: 600px;
 
 @mixin button-primary {
   @include button-base;
-  background: $red;
-  color: #fff;
+  border-radius: 1;
+  border: 1.5px solid rgba(#fff, 0.5);
+  background: #fff;
+  color: $red
 }
 
 @mixin button-outline($on-dark: false) {
