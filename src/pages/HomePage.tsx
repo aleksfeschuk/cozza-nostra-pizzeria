@@ -1,4 +1,5 @@
 import  Header  from '../components/Header';
+import ComingSoonBanner from '../components/ComingSoonBanner';
 import Hero from '../components/Hero';
 import PopularSection from '../components/PopularSection';
 import MenuCarousel from '../components/MenuCarousel';
@@ -14,6 +15,8 @@ import Footer from '../components/Footer';
 export default function HomePage () {
     return (
         <>
+            <ComingSoonBanner/>
+
             <Header />
             <main>
                 <Hero />
