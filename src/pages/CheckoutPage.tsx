@@ -17,8 +17,21 @@ export default function CheckoutPage() {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [street, setStreet] = useState('')
+    const [district, setDistrict] = useState('')
     const [city, setCity] = useState('Gdańsk')
     const [postalCode, setPostalCode] = useState('')
+
+    const DISTRICT_FEES: Record<string, number> ={
+        'Wrzeszcz': 6,
+        'Przymorze': 6,
+        'Brzeźno': 6,
+        'Zaspa': 8,
+        'Letnica': 8,
+        'Aniołki': 10,
+    }
+
+    const DISTRICTS = Object.keys(DISTRICT_FEES)
+
     const [cardNumber, setCardNumber] = useState('')
     const [cardExpiry, setCardExpiry] = useState('')
     const [cardCvv, setCardCvv] = useState('')
@@ -60,15 +73,17 @@ export default function CheckoutPage() {
         )
     }
 
-    const deliveryFee = method === 'delivery' && totalPrice > 0 ? 8 : 0
-    const grandTotal = totalPrice + deliveryFee
+    const deliveryFee = method === 'delivery' && totalPrice > 0 
+        ? (DISTRICT_FEES[district] ?? 8) 
+        : 0
+    const grandTotal = Math.max(0, totalPrice + deliveryFee - discount)
 
     function validate(): string | null {
         if (items.length === 0) return 'Twój koszyk jest pusty.'
         if (!name.trim()) return 'Podaj imię i nazwisko.'
         if (!phone.trim()) return 'Podaj numer telefonu.'
-        if (method === 'delivery' && (!street.trim() || !postalCode.trim())) {
-            return 'Podaj adres dostawy.'
+        if (method === 'delivery' && (!street.trim() || !district || !postalCode.trim())) {
+            return 'Podaj ulicę, dzielnicę i kod pocztowy.'
         }
 
         if (payment === 'card') { 
@@ -190,6 +205,30 @@ export default function CheckoutPage() {
                             <>
                                 <div className={styles.field}>
                                     <label className={styles.label} htmlFor="street">
+                                        Dzielnica dostawy
+                                    </label>
+                                    <select
+                                        id="district"
+                                        className={styles.input}
+                                        value={district}
+                                        onChange={e => setDistrict(e.target.value)}
+                                        >
+                                        <option value="">Wybierz dzielnicę</option>
+                                        {DISTRICTS.map(d => (
+                                            <option key={d} value={d}>
+                                            {d} — {DISTRICT_FEES[d]} zł dostawa
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {district && (
+                                        <p style={{ fontSize: '12px', color: '#3e7d3a', marginTop: '6px' }}>
+                                            ✓ Dostarczamy do: {district} — opłata {DISTRICT_FEES[district]} zł
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className={styles.field}>
+                                    <label className={styles.label} htmlFor="street">
                                         Ulica i numer
                                     </label>
                                     <input
@@ -203,11 +242,10 @@ export default function CheckoutPage() {
 
                                 <div className={styles.fieldRow}>
                                     <div className={styles.field}>
-                                        <label className={styles.label} htmlFor="city">
+                                        <label className={styles.label}>
                                             Miasto
                                         </label>
                                         <input
-                                            id="city"
                                             className={styles.input}
                                             value={city}
                                             onChange={(e) => setCity(e.target.value)}
@@ -431,6 +469,17 @@ export default function CheckoutPage() {
                             <span className={styles.summaryRowName}>Dostawa</span>
                             <span>{deliveryFee === 0 ? '—' : `${deliveryFee} zł`}</span>
                         </div>
+                        {discount > 0 && (
+                            <div className={styles.summaryRow}>
+                                <span className={styles.summaryRowName} style={{color: '#3e7d3a'}}>
+                                    Rabat ({promoApplied})
+                                </span>
+                                <span 
+                                    style={{ color: '#3e7d3a', fontWeight: 700}}
+                                >-{discount} zł</span>
+                            </div>
+                        
+                        )}
                         <hr className={styles.summaryDivider} />
                         <div className={styles.summaryTotal}>
                             <span>Razem</span>
