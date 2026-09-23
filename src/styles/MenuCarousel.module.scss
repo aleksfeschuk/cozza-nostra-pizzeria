@@ -55,16 +55,20 @@
     justify-content: center;
     color: $text-dark;
     cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 
-    &:not(:disabled):hover {
+
+    &:hover {
         border-color: $red;
         color: $red;
     }
 
     &:disabled {
         opacity: 0.35;
-        cursor: not-allowed; 
+        cursor: default;
+        &:hover {
+            border-color: $card-border;
+            color: $text-dark
+        } 
     }
 }
 
@@ -86,7 +90,7 @@
 .card {
     scroll-snap-align: start;
     flex: 0 0 auto;
-    width: 260px;
+    width: 240px;
     display: flex;
     flex-direction: column;
     // Needed so the zooming photo clips inside the card's border-radius
@@ -97,16 +101,17 @@
     cursor: pointer;
 
     @media (max-width: $bp-mobile) {
-        width: 210px;
+        width: 200px;
     }
 }
 
 
 .photoWrap {
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   width: 100%;
   background: $placeholder-fill;
+  flex-shrink: 0;
 }
 
 .photo {
@@ -119,41 +124,53 @@
 
 
 .cardBody {
-  padding: $space-3;
+  padding: $space-2 $space-3 $space-3;
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: $space-1;
 }
 
 .name {
-    margin-top: $space-3;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: $text-dark;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .desc {
-    margin-top: 4px;
-    font-size: 11.5px;
+    font-size: 11px;
     color: $muted;
-    line-height: 1.5;
-    min-height: 34px;
+    line-height: 1.45;
+    // Max 2 lines
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bottomRow {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-top: $space-2
 }
 
 .sizes {
     display: flex;
     gap: 5px;
-    margin-bottom: $space-2;
 }
 
 .sizeBtn {
-    width: 30px;
-    height: 30px;
-    border-radius: 7px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
     border: 1.5px solid $card-border;
     background: #fff;
     color: $muted;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     cursor: pointer;
     font-family: $font-body;
@@ -170,36 +187,47 @@
     border-color: $red;
     background: $red;
     color: #fff;
-    box-shadow: 0 2px 6px rgba($red, 0.35);
 }
 
-.footer {
-    margin-top: $space-3;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
 .price {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: $text-dark;
+    flex: 1;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .addBtn {
     border: none;
     background: $red;
     color: #fff;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
-    padding: 8px 14px;
-    border-radius: $radius-pill;
+    padding: 7px 12px;
+    border-radius: 7px;
     cursor: pointer;
     transition: background 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 
     &:hover {
         background: $red-dark;
     }
+}
+
+.addBtnDone {
+    @extend .addBtn;
+    background: #3e7d3a;
+    
+    &:hover { 
+        background: #3e7d3a; 
+    }
+}
+
+.footer {
+    display: none;
 }
 
 .fullMenuWrap {

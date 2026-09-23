@@ -9,8 +9,6 @@ import { fadeUp, stagger, staggerItem } from "./lib/animations";
 import { FullMenuModal  } from "./FullMenuModal";
 
 
-
-
 export default function MenuCarousel() {
     const trackRef = useRef<HTMLDivElement>(null)
     const cardRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -61,7 +59,6 @@ export default function MenuCarousel() {
                 for (const entry of entries) {
                     if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
                         const idx = cardRefs.current.findIndex((el) => el === entry.target)
-
                         if (idx !== -1) setActiveIndex(idx)
 
                         const id = (entry.target as HTMLElement).dataset.pizzaName
@@ -134,39 +131,42 @@ export default function MenuCarousel() {
                         data-pizza-name={pizza.name}
                     >
                         <img className={styles.photo} src={pizza.image} alt={pizza.name} loading="lazy" />
-                        <h3 className={styles.name}>{pizza.name}</h3>
-                        <p className={styles.desc}>{pizza.description}</p>
+                        <div className={styles.cardBody}>
+                            <div className={styles.name}>{pizza.name}</div>
+                            <p className={styles.desc}>{pizza.description}</p>
 
-                        <div className={styles.sizes}>
-                            {SIZES.map(s => {
-                                const isActive = (selectedSizes[pizza.id] ?? 'M') === s
-                                return (
-                                    <motion.button
-                                        key={s}
-                                        className={isActive ? styles.sizeBtnActive : styles.sizeBtn}
-                                        onClick={() => setSize(pizza.id, s)}
-                                        whileTap={{ scale: 0.85}}
-                                        transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                                        title={SIZE_CM[s]}
-                                    >
-                                        {s}
-                                    </motion.button>
-                                )
-                            })}
-                        </div>
+                            <div className={styles.bottomRow}>
+                                <div className={styles.sizes}>
+                                    {SIZES.map(s => {
+                                        const isActive = (selectedSizes[pizza.id] ?? 'M') === s
+                                        return (
+                                            <motion.button
+                                                key={s}
+                                                className={isActive ? styles.sizeBtnActive : styles.sizeBtn}
+                                                onClick={() => setSize(pizza.id, s)}
+                                                whileTap={{ scale: 0.85}}
+                                                transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                                                title={SIZE_CM[s]}
+                                            >
+                                                {s}
+                                            </motion.button>
+                                        )
+                                    })}
+                                </div>
 
-                        <div className={styles.footer}>
-                            <span className={styles.price}>
-                                {priceForSize(pizza.priceBase, selectedSizes[pizza.id] ?? 'M')} zł
-                            </span>
-                            <motion.button
-                                className={justAdded === `${pizza.id}-${selectedSizes[pizza.id] ?? 'M'}` ? styles.addBtnDone : styles.addBtn}
-                                onClick={() => handleAddCart(pizza.id, pizza.name, pizza.priceBase)}
-                                whileTap={{ scale: 0.93, y: 2 }}
-                                transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                            >
-                                {justAdded === `${pizza.id}-${selectedSizes[pizza.id] ?? 'M'}` ? 'Dodano ✓' : 'Dodaj'}
-                            </motion.button>
+                            
+                                <span className={styles.price}>
+                                    {priceForSize(pizza.priceBase, selectedSizes[pizza.id] ?? 'M')} zł
+                                </span>
+                                <motion.button
+                                    className={justAdded === `${pizza.id}-${selectedSizes[pizza.id] ?? 'M'}` ? styles.addBtnDone : styles.addBtn}
+                                    onClick={() => handleAddCart(pizza.id, pizza.name, pizza.priceBase)}
+                                    whileTap={{ scale: 0.93, y: 2 }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                                >
+                                    {justAdded === `${pizza.id}-${selectedSizes[pizza.id] ?? 'M'}` ? 'Dodano ✓' : 'Dodaj'}
+                                </motion.button>
+                            </div>
                         </div>
                     </motion.div>
                 ))}
@@ -179,7 +179,7 @@ export default function MenuCarousel() {
             </div>
 
             <div className={styles.fullMenuWrap}>
-                <motion.div
+                <motion.button
                     type="button"
                     className={styles.fullMenuBtn}
                     onClick={() => {
@@ -194,7 +194,7 @@ export default function MenuCarousel() {
                     whileTap={{ scale: 0.97, y: 1}}
                 >
                     Zobacz pełne menu
-                </motion.div>
+                </motion.button>
 
                 <FullMenuModal 
                     isOpen={fullMenuOpen}
