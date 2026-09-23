@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import styles from '../styles/FullMenuModal.module.scss'
 import { CloseIcon } from './Icons'
 import { SearchIcon } from 'lucide-react'
-import { MENU } from './data/menu'
+import { MENU, priceForSize, SIZE_CM, SIZES, type PizzaSize } from './data/menu'
 import { useCart } from '../hooks/useCart'
 import { track } from './lib/analytics'
 import { stagger, staggerItem, overlayVariants, scalePop } from '../components/lib/animations'
@@ -18,7 +18,15 @@ type Props = {
 export function FullMenuModal({ isOpen, onClose }: Props) {
     const [query, setQuery] = useState('')
     const [justAdded, setJustAdded] = useState<string | null>(null)
+    const [selectedSizes, setSelectedSizes] = useState<Record<string, PizzaSize>>(
+        Object.fromEntries(MENU.map(p => [p.id, 'M' as PizzaSize]))
+    )
+
     const { addItem } = useCart()
+
+    function setSize(id: string, size: PizzaSize) {
+        setSelectedSizes(prev => ({ ...prev, [id]: size }))
+    }
 
 
     useEffect(() => {
@@ -26,7 +34,7 @@ export function FullMenuModal({ isOpen, onClose }: Props) {
             if (e.key === 'Escape') onClose()
         }
         if (isOpen) document.addEventListener('keydown', onKey)
-            return () => document.removeEventListener('keydown', onKey)
+        return () => document.removeEventListener('keydown', onKey)
     }, [isOpen, onClose])
 
     useEffect(() => {
@@ -38,15 +46,19 @@ export function FullMenuModal({ isOpen, onClose }: Props) {
         if (isOpen) setQuery('')
     }, [isOpen])
 
-    function handleAdd(id: string, name: string, price: number) {
-        addItem(id, name, price)
-        track({ type: 'cart_add', name })
-        setJustAdded(id)
+    function handleAdd(id: string, name: string, priceBase: number) {
+        const size = selectedSizes[id] ?? 'M'
+        const price = priceForSize(priceBase, size)
+        addItem(id, `${name}, (${SIZE_CM[size]})`, price, size )
+        track({ type: 'cart_add', name: `${name} ${size}` })
+        const key = `${id}-${size}`
+        setJustAdded(key)
         window.setTimeout(() => setJustAdded(c => c === id ? null : c), 1200)
     }
 
     const filtered = MENU.filter(p => 
-        p.name.toLowerCase().includes(query.toLowerCase())
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.description.toLowerCase().includes(query.toLowerCase())
     )
 
     return (
@@ -114,7 +126,7 @@ export function FullMenuModal({ isOpen, onClose }: Props) {
                                 variants={stagger}
                                 initial="hidden"
                                 animate="visible"
-                                key="query"
+                                key={query}
                             >
                                 {filtered.map(pizza => (
                                     <motion.div
@@ -145,20 +157,49 @@ export function FullMenuModal({ isOpen, onClose }: Props) {
                                             <div className={styles.name}>{pizza.name}</div>
                                             <p className={styles.desc}>{pizza.description}</p>
                                             <div className={styles.cardFooter}>
-                                                <span className={styles.price}>{pizza.price}</span>
-                                                <motion.div
-                                                    className={justAdded === pizza.id ? styles.addBtnDone : styles.addBtn}
-                                                    onClick={() => handleAdd(pizza.id, pizza.name, pizza.priceValue)}
+                                                <div style={{ display: 'flex', gap: '4px'}}>
+                                                    {SIZES.map(s => {
+                                                        const active = (selectedSizes[pizza.id] ?? 'M') === s
+
+                                                        return (
+                                                            <motion.button
+                                                                key={s}
+                                                                onClick={() => setSize(pizza.id, s)}
+                                                                whileTap = {{ scale: 0.85 }}
+                                                                style={{
+                                                                    width: '28px', height: '28px',
+                                                                    borderRadius: '7px',
+                                                                    border: `1.5px solid ${active ? '#c1382b' : '#e7dfcf'}`,
+                                                                    background: active ? '#c1382b' : "#fff",
+                                                                    color: active ? '#fff' : '#8b8276',
+                                                                    fontSize: '10px', fontWeight: 700,
+                                                                    cursor: 'pointer',
+                                                                    fontFamily: 'inherit'
+                                                                }}
+                                                                title={SIZE_CM[s]}
+                                                            >
+                                                                {s}
+                                                            </motion.button>
+                                                        )
+                                                    })}
+
+                                                </div>
+
+                                                <span className={styles.price}>
+                                                   {priceForSize(pizza.priceBase, selectedSizes[pizza.id] ?? 'M')} zł
+                                                </span>
+                                                <motion.button
+                                                    className={justAdded === `${pizza.id} - ${selectedSizes[pizza.id]} ?? 'M'}` ? styles.addBtnDone : styles.addBtn}
+                                                    onClick={() => handleAdd(pizza.id, pizza.name, pizza.priceBase)}
                                                     whileTap={{ scale: 0.92, y: 2}}
                                                     transition={{ type: 'spring', stiffness: 500, damping: 25}}
                                                 >
-                                                    {justAdded === pizza.id ? 'Dodano ✓' : 'Dodaj'}
-                                                </motion.div>
+                                                    {justAdded === `${pizza.id}-${selectedSizes[pizza.id] ?? 'M'}` ? 'Dodano ✓' : 'Dodaj'}
+                                                </motion.button>
                                             </div>
                                         </div>
                                     </motion.div>
                                 ))}
-
                             </motion.div>
                         )}
                     </motion.div>
