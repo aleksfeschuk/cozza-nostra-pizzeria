@@ -15,6 +15,17 @@ const NAV = [
     { label: 'Kontakt', href: '#kontakt' },
 ]
 
+function scrollTo(href: string, e: React.MouseEvent) {
+    if(!href.startsWith('#')) return
+    e.preventDefault()
+    const id = href.slice(1)
+    const el = document.getElementById(id)
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start'})
+    }
+}
+
+
 export default function Header() {
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
@@ -30,7 +41,7 @@ export default function Header() {
         function onScroll() {
             setScrolled(window.scrollY > 20) 
         }
-        
+    
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => window.removeEventListener('scroll', onScroll)
     }, [])
@@ -65,9 +76,12 @@ export default function Header() {
                     {isHome && (
                         <nav className={styles.nav}>
                             {NAV.map((item, i) => (
-                                <a key={item.href} 
-                                href={item.href} 
-                                className={i === 0 ? styles.navLinkActive : styles.navLink}>
+                                <a 
+                                    key={item.href} 
+                                    href={item.href} 
+                                    className={i === 0 ? styles.navLinkActive : styles.navLink}
+                                    onClick={(e) => scrollTo(item.href, e)}
+                                >
                                     {item.label}
                                 </a>
                             ))}
@@ -108,7 +122,7 @@ export default function Header() {
                                     whileHover={{ y: -2, boxShadow: '0 8px 0 #7a1f15, 0 12px 28px rgba(193,56,43,0.4)'}}
                                     whileTap={{ y: 3, boxShadow: '0 1px 0 #7a1f15, 0 2px 8px rgba(193,56,43,0.15)' }}
                                     transition={{ type: 'spring', stiffness: 500, damping: 25}}
-                                    >
+                                >
                                     Zamów teraz →
                                 </motion.a>
                             )}
@@ -133,7 +147,7 @@ export default function Header() {
                                     >
                                         <CloseIcon width={18} height={18} />
                                     </motion.span>    
-                                )   : (
+                                )   :   (
                                     <motion.span
                                         key="menu"
                                         initial={{ rotate: 90, opacity: 0 }}
@@ -192,7 +206,7 @@ export default function Header() {
                                         href={item.href}
                                         className={styles.mobileNavLink}
                                         variants={mobileMenuLink}
-                                        onClick={() => setOpen(false)}
+                                        onClick={(e) => { scrollTo(item.href, e); setOpen(false) }}
                                         whileHover={{x: 10, color: '#f3eee2' }}
                                         whileTap={{ scale: 0.97}}
                                         transition={{ type: 'spring', stiffness: 400, damping: 28}}
@@ -210,7 +224,7 @@ export default function Header() {
                                     onClick={() => { handleCta(); setOpen(false) }}
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.97, y: 2}}
-                                    transition={{ type: 'sping', stiffness: 500, damping: 25 }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 25 }}
                                 >
                                     Zamów teraz →
                                 </motion.a>
