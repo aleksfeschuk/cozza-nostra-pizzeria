@@ -21,12 +21,14 @@
 }
 
 .moonIcon {
-    color: #e8b93f;
+    color: $ember-glow;
     flex-shrink: 0;
     margin-top: 4px;
 }
 
 .lateTitle {
+    font-family: $font-display;
+    font-weight: 500;
     font-size: 22px;
     font-weight: 700;
     color: $text-on-ink;
@@ -48,7 +50,7 @@
     font-family: $font-display;
     font-style: italic;
     font-size: 26px;
-    color: #e8785f;
+    color: $ember-glow;
     line-height: 1.1;
     text-align: right;
 }

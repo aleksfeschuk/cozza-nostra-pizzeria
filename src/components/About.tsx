@@ -1,3 +1,4 @@
+import doughImg from '../images/pizzeria/how-this-work.jpeg'
 import { motion } from 'motion/react';
 import styles from '../styles/About.module.scss';
 import { track } from '../components/lib/analytics'
@@ -9,7 +10,7 @@ export default function About() {
             <div className={styles.inner}>
                 <motion.img 
                     className={styles.photo} 
-                    src="src/images/pizzeria/how-this-work.jpeg" 
+                    src={doughImg}
                     alt="Przygotowanie ciasta na pizzę" 
                     variants={slideLeft}
                     initial="hidden"
@@ -25,7 +26,7 @@ export default function About() {
                     transition={{ delay: 0.1 }}
                 
                 >
-                    <p className={styles.eyebrow}>O NAS</p>
+                    <p className={styles.eyebrow}>Kim jesteśmy</p>
                     <h2 className={styles.title}>Pasja do włoskiej pizzy</h2>
                     <p className={styles.body}>
                         Cosa Nostra to pizzeria, która powstała z miłości do prawdziwej

@@ -1,33 +1,72 @@
 @use '../styles/tokens' as *;
 
-.section {
-    background: $ink-soft;
-    padding-block: $space-8;
+.band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  background: $char-deep;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  z-index: -2;
+}
+
+// Darken the right side, where the text sits; the fire stays on the left.
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(270deg, rgba($char-deep, 0.95) 0%, rgba($char-deep, 0.7) 40%, rgba($char-deep, 0.1) 80%);
+
+  @media (max-width: $bp-tablet) {
+    background: rgba($char-deep, 0.72);
+  }
 }
 
 .inner {
-    @include container;
+  @include container;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  padding-block: $space-9;
+
+  @media (max-width: $bp-tablet) {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 .eyebrow {
-    @include eyebrow(#e8785f);
+  @include eyebrow;
 }
 
 .title {
-    margin-top: $space-3;
-    font-size: 30px;
-    font-weight: 700;
-    color: $text-on-ink;
+  margin-top: $space-3;
+  max-width: 13em;
+  font-size: $fs-h2;
+  font-weight: 500;
+  color: $flour;
 }
 
 .body {
-    margin-top: $space-2;
-    font-size: 13.5px;
-    color: $muted-on-ink;
-    max-width: 480px;
+  margin-top: $space-4;
+  max-width: 30em;
+  font-size: $fs-lead;
+  color: rgba($flour, 0.78);
 }
 
 .btn {
-    @include button-primary;
-    margin-top: $space-5;
+  @include button-primary;
+  margin-top: $space-6;
 }

@@ -114,7 +114,7 @@
     border: 1px solid rgba(#fff, 0.1);
     cursor: pointer;
     padding: 8px 14px;
-    border-radius: 9px;
+    border-radius: $radius-md;
     font-family: inherit;
     transition: 
         background 0.22s ease,
@@ -160,7 +160,7 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    border-radius: 10px;
+    border-radius: $radius-md;
     border: 1.5px solid rgba(#fff, 0.14);
     color: $text-on-ink;
     background: rgba(#fff, 0.04);
@@ -222,7 +222,7 @@
 .mobileCloseBtn {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: $radius-md;
     border: 1.5px solid rgba(#fff, 0.14);
     background: rgba(#fff, 0.05);
     color: $text-on-ink;

@@ -15,29 +15,21 @@
 }
 
 .eyebrow {
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #e8b93f; // gold for "popular"
+    @include eyebrow;
 }
 
 .title {
     margin-top: $space-3;
     font-family: $font-display;
-    font-size: 36px;
-    font-weight: 700;
-    color: $ink;
-
-    @media (max-width: $bp-mobile) {
-        font-size: 26px;
-    }
+    font-size: $fs-h2;
+    font-weight: 500;
+    color: $flour;
 }
 
 .sub {
     margin-top: $space-2;
     font-size: 14px;
-    color: $ink-soft;
+    color: $smoke;
 }
 
 .grid {
@@ -56,7 +48,7 @@
 .card {
     background: $ink;
     border: 1px solid rgba(#fff, 0.08);
-    border-radius: 16px;
+    border-radius: $radius-md;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -67,13 +59,13 @@
     position: absolute;
     top: $space-3;
     left: $space-3;
-    background: #e8b93f;
-    color: #111;
+    background: rgba($char-deep, 0.78);
+    color: $flour;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.08em;
     padding: 4px 10px;
-    border-radius: 10px;
+    border-radius: $radius-md;
     z-index: 1;
 }
 
@@ -128,7 +120,7 @@
 .sizeBtn {
     width: 32px;
     height: 32px;
-    border-radius: 8px;
+    border-radius: $radius-sm;
     border: 1.5px solid rgba(#fff, 0.18);
     background: transparent;
     color: rgba($text-on-ink, 0.7);
@@ -181,6 +173,6 @@
 
 .addBtnDone {
     @extend .addBtn;
-    background: #3e7d3a;
-    &:hover { background: #3e7d3a; }
+    background: $basil;
+    &:hover { background: $basil; }
 }

@@ -21,7 +21,7 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     border-radius: $radius-md;
-    background: #c9b48f;
+    background: $placeholder-fill;
     object-fit: cover;
 }
 
@@ -31,9 +31,9 @@
 
 .title {
     margin-top: $space-3;
-    font-size: 28px;
-    font-weight: 700;
-    color: $text-dark;
+    font-size: $fs-h2;
+    font-weight: 500;
+    color: $flour;
 }
 
 .body {

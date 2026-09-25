@@ -1,25 +1,46 @@
 
+// ---- Core palette (use these in new code) -------------------
+$char: #16110e;        // soot — page background
+$char-deep: #0f0b09;   // deepest — header, footer
+$ash: #211a15;         // raised surface — cards, drawers
+$ash-line: #3a2f27;    // hairlines, borders
+$flour: #f1e8da;       // primary text
+$smoke: #a89a89;       // secondary text
+$ember: #c0561f;       // accent fill (buttons) — white text passes AA
+$ember-glow: #e38b35;  // accent text on dark — small labels, prices
+$basil: #6e8b5a;       // success / confirmations
+$on-accent: #fff;
 
-// Colors
-$ink: #14201a; // dark sections: header, hero, CTA banner, late-hours, footer
-$ink-soft: #1b2a1e;
-$cream: #f6f0e4; // light sections
-$card: #ffffff;
-$card-border: #e7dfcf;
-$red: #c1382b;
-$red-dark: #a32e23;
-$text-dark: #221d18;
-$text-on-ink: #f3eee2;
-$muted: #8b8276;
-$muted-on-ink: #b7b0a0;
-$gold-line: #d9cbae;
-$placeholder-fill: #ded2be;
+// ---- Legacy aliases -----------------------------------------
+// Older module files still use these names. They now point at
+// the dark palette, so every section re-themes automatically.
+$ink: $char-deep;
+$ink-soft: $ash;
+$cream: $char;
+$card: $ash;
+$card-border: $ash-line;
+$red: $ember;
+$red-dark: #9e4418;
+$text-dark: $flour;
+$text-on-ink: $flour;
+$muted: $smoke;
+$muted-on-ink: $smoke;
+$gold-line: $ash-line;
+$placeholder-fill: #2b221c;
 
-// Typography
-$font-display: 'Playfair Display', Georgia, serif;
-$font-body: 'Inter', Arial, sans-serif;
+// ---- Typography ---------------------------------------------
+$font-display: 'Bodoni Moda', 'Didot', Georgia, serif;
+$font-body: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
 
-// Spacing scale (8px base)
+// Type scale (px)
+$fs-small: 13px;
+$fs-body: 16px;
+$fs-lead: 18px;
+$fs-h3: 22px;
+$fs-h2: clamp(32px, 4vw, 48px);
+$fs-h1: clamp(44px, 7vw, 92px);
+
+// ---- Spacing (8px base) -------------------------------------
 $space-1: 4px;
 $space-2: 8px;
 $space-3: 16px;
@@ -28,18 +49,19 @@ $space-5: 32px;
 $space-6: 48px;
 $space-7: 64px;
 $space-8: 80px;
-$space-9: 96px;
-$space-10: 128px;
+$space-9: 112px;
+$space-10: 144px;
 
-// Layout
-$max-width: 1288px;
-$radius-sm: 8px;
-$radius-md: 12px;
+// ---- Layout -------------------------------------------------
+$max-width: 1240px;
+$radius-sm: 4px;   // buttons, inputs — crisp, not pill
+$radius-md: 6px;   // cards
 $radius-pill: 999px;
 
-// Breakpoints
 $bp-tablet: 900px;
 $bp-mobile: 600px;
+
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
 
 @mixin container {
   max-width: $max-width;
@@ -47,7 +69,7 @@ $bp-mobile: 600px;
   padding-inline: $space-6;
 
   @media (max-width: $bp-mobile) {
-    padding-inline: $space-3;
+    padding-inline: 20px;
   }
 }
 
@@ -56,58 +78,62 @@ $bp-mobile: 600px;
   padding-block: $space-9;
 
   @media (max-width: $bp-mobile) {
-    padding-block: $space-6;
+    padding-block: $space-7;
   }
 }
 
-@mixin eyebrow($color: $red) {
-  font-family: $font-body;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+// Section label: small italic serif in ember — replaces the
+// tracked-out ALL-CAPS labels, which read as generic templates.
+@mixin eyebrow($color: $ember-glow) {
+  font-family: $font-display;
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
   color: $color;
 }
 
 @mixin button-base {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: $space-2;
-  border-radius: $radius-pill;
+  border-radius: $radius-sm;
   font-family: $font-body;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  padding: 14px 28px;
+  letter-spacing: 0.01em;
+  padding: 15px 28px;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
   white-space: nowrap;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
+  transition: background 0.2s $ease, color 0.2s $ease, border-color 0.2s $ease,
+    transform 0.15s $ease;
 
-  &:hover {
-    opacity: 0.9;
-  }
   &:active {
-    transform: scale(0.98);
+    transform: translateY(1px);
   }
 }
 
 @mixin button-primary {
   @include button-base;
-  border-radius: 1;
-  border: 1.5px solid rgba(#fff, 0.5);
-  background: #fff;
-  color: $red
+  background: $ember;
+  color: $on-accent;
+
+  &:hover {
+    background: #d4632a;
+  }
 }
 
-@mixin button-outline($on-dark: false) {
+@mixin button-outline($on-dark: true) {
   @include button-base;
   background: transparent;
+  color: $flour;
+  border-color: rgba($flour, 0.35);
 
-  @if $on-dark {
-    border: 1.5px solid rgba(#fff, 0.5);
-    color: $text-on-ink;
-  } @else {
-    border: 1.5px solid $text-dark;
-    color: $text-dark;
+  &:hover {
+    border-color: $flour;
   }
 }

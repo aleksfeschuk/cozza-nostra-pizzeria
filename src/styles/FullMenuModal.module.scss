@@ -20,13 +20,13 @@
     width: 100%;
     max-width: 1200px;
     background: $cream;
-    border-radius: 20px;
+    border-radius: $radius-md;
     padding: $space-6 $space-6 $space-7;
     position: relative;
 
     @media (max-width: $bp-mobile) {
         padding: $space-4 $space-3 $space-5;
-        border-radius: 14px;
+        border-radius: $radius-md;
     }
 }
 
@@ -50,9 +50,9 @@
 .closeBtn {
     width: 42px;
     height: 42px;
-    border-radius: 10px;
+    border-radius: $radius-md;
     border: 1.5px solid $card-border;
-    background: #fff;
+    background: $ash;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,11 +84,11 @@
 .search {
     width: 100%;
     padding: 12px 14px 12px 42px;
-    border-radius: 10px;
+    border-radius: $radius-md;
     border: 1.5px solid $card-border;
     font-size: 14px;
     font-family: $font-body;
-    background: #fff;
+    background: $ash;
     color: $text-dark;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -127,9 +127,9 @@
 
 // Pizza card inside modal
 .card {
-    background: #fff;
+    background: $ash;
     border: 1px solid $card-border;
-    border-radius: 14px;
+    border-radius: $radius-md;
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -190,7 +190,7 @@
     font-size: 12px;
     font-weight: 700;
     padding: 8px 16px;
-    border-radius: 8px;
+    border-radius: $radius-sm;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
 
@@ -201,8 +201,8 @@
 
 .addBtnDone {
     @extend .addBtn;
-    background: #3e7d3a;
-    &:hover { background: #3e7d3a; }
+    background: $basil;
+    &:hover { background: $basil; }
 }
 
 .count {
